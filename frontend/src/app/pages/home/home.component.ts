@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMapLocation } from '@fortawesome/free-solid-svg-icons';
-
+import { DatabaseService } from '../../services/database/database.service';
+import { EventsData } from '../../interfaces/eventsData';
 
 
 
@@ -12,20 +13,23 @@ import { faMapLocation } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
-
+export class HomeComponent implements OnInit {
   faMapLocation: any = faMapLocation;
+  eventsResults: EventsData[] = [];
 
   tableRows: any = document.getElementsByTagName('tbody');
   // rows: any = this.tableRows.getElementsByTagName('td');
 
-  constructor() {
-    console.log(this.tableRows);
-
+  constructor(private databaseService: DatabaseService) {
     // console.log(this.rows.length);
-
   }
 
+  ngOnInit(): void {
+    this.getAllEvents();
+  }
 
+  getAllEvents(): void {
+
+  }
 
 }
