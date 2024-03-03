@@ -3,6 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMapLocation } from '@fortawesome/free-solid-svg-icons';
 import { DatabaseService } from '../../services/database/database.service';
 import { EventsData } from '../../interfaces/eventsData';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
   tableRows: any = document.getElementsByTagName('tbody');
   // rows: any = this.tableRows.getElementsByTagName('td');
 
-  constructor(private databaseService: DatabaseService) {
+  constructor(private databaseService: DatabaseService, private http: HttpClient) {
     // console.log(this.rows.length);
   }
 
@@ -29,7 +30,12 @@ export class HomeComponent implements OnInit {
   }
 
   getAllEvents(): void {
+    this.databaseService.getEvents()
+      .subscribe((response) => {
+        this.eventsResults.push(response);
+        console.log(this.eventsResults);
 
+      })
   }
 
 }
