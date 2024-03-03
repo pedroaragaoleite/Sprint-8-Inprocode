@@ -78,6 +78,8 @@
     }
 }
 
+
+
 #info {
     max-width: 920px;
     margin: 0 auto;
@@ -85,7 +87,7 @@
 
 .table {
     width: 100%;
-    margin: 60px auto;
+    margin: 60px 0 10px 0;
     text-align: center;
     color: #ffffff;
 }
@@ -93,15 +95,41 @@
 thead th {
     font-size: 1rem;
     border-bottom: 1px solid gray;
+    padding-bottom: 10px;
 
+}
+
+tbody tr {
+    border-bottom: 1px solid gray;
 }
 
 tbody td {
     font-size: 14px;
-    padding: 10px;
-    border-bottom: 1px solid gray;
+    padding: 20px 10px;
+
 }
 
+.bg-pair {
+    background-color: #353131;
+}
+
+.bg-even {
+    background-color: #4e535a;
+}
+
+.info {
+    &-flex {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &-btn {
+        background: #ffffff;
+        border: none;
+        padding: 3px 3px;
+        cursor: pointer;
+    }
+}
 
 @keyframes mouse {
     0% {
