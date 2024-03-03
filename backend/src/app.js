@@ -1,11 +1,18 @@
 import express from 'express';
+import cors from 'cors';
 import runningEventsRoutes from './routes/runningEvents.routes.js';
 
 
-const app = express();
-app.use(cors());
-app.use(express.json());
 
+
+const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:4200', // Allow only requests from your Angular app
+};
+
+app.use(express.json());
+app.use(cors(corsOptions));
 // app.use(runningEventsRoutes);
 app.use('/api', runningEventsRoutes);
 

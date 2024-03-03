@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
   getAllEvents(): void {
     this.databaseService.getEvents()
       .subscribe((response) => {
+        console.log(response);
+
         this.eventsResults.push(response);
         console.log(this.eventsResults);
 
