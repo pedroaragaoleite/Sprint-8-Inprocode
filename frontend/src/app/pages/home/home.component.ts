@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMapLocation } from '@fortawesome/free-solid-svg-icons';
 import { DatabaseService } from '../../services/database/database.service';
-import { EventsData } from '../../interfaces/eventsData';
+import { EventsData } from '../../interfaces/events-data';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -31,10 +31,10 @@ export class HomeComponent implements OnInit {
 
   getAllEvents(): void {
     this.databaseService.getEvents()
-      .subscribe((response) => {
-        console.log(response);
+      .subscribe((events: EventsData[]) => {
+        console.log(events);
 
-        this.eventsResults.push(response);
+        this.eventsResults = events;
         console.log(this.eventsResults);
 
       })

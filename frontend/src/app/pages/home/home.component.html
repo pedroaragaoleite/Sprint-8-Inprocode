@@ -24,37 +24,25 @@
                 </tr>
             </thead>
             <tbody>
+                @if(eventsResults) {
+                @for( event of eventsResults; track $index) {
                 <tr class="bg-even">
-                    <td>2024-03-02</td>
-                    <td>Example Name</td>
-                    <td>Example City</td>
-                    <td>Example Type</td>
-                    <td>Example Route Type</td>
-                    <td>10km</td>
+                    <td>{{event.event_date}}</td>
+                    <td>{{event.name}}</td>
+                    <td>{{event.city}}</td>
+                    <td>{{event.type}}</td>
+                    <td>{{event.route_type}}</td>
+                    <td>{{event.distance}}</td>
                     <td class="info-flex"><button class="info-btn">Edit</button><button class="info-btn">Del</button>
                     </td>
                 </tr>
-                <tr class="bg-pair">
-                    <td>2024-03-02</td>
-                    <td>Example Name</td>
-                    <td>Example City</td>
-                    <td>Example Type</td>
-                    <td>Example Route Type</td>
-                    <td>10km</td>
-                    <td class="info-flex"><button class="info-btn">Edit</button><button class="info-btn">Del</button>
-                    </td>
-                </tr>
-                <tr class="bg-even">
-                    <td>2024-03-02</td>
-                    <td>Example Name</td>
-                    <td>Example City</td>
-                    <td>Example Type</td>
-                    <td>Example Route Type</td>
-                    <td>10km</td>
-                    <td class="info-flex"><button class="info-btn">Edit</button><button class="info-btn">Del</button>
-                    </td>
-                </tr>
-                <!-- Add more rows here -->
+                }
+                } @else {
+                <span>no results</span>
+                }
+
+
+
             </tbody>
         </table>
         <button class="info-add">Add race</button>

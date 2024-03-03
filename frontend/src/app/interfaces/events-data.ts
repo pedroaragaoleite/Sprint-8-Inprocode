@@ -1,5 +1,5 @@
 export interface EventsData {
-    id: number,
+    id?: number,
     event_date: Date,
     name: string,
     city: string,

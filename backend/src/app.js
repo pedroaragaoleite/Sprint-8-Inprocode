@@ -17,7 +17,7 @@ app.use(cors(corsOptions));
 app.use('/api', runningEventsRoutes);
 
 app.use((req, res, next) => {
-    req.status(404).json({
+    res.status(404).json({
         message: "Endpoint not found"
     })
 })
