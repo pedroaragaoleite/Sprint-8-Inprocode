@@ -24,16 +24,24 @@ export class DatabaseService {
     return result;
   }
 
-  deleteEvent(event:any):Observable<any> {
+  getEvent(event: any): Observable<any> {
+    const id = event.id;
+    return this.http.get<any>(`${apiSql}/${id}`, httpOptions);
+  }
+  deleteEvent(event: any): Observable<any> {
     const id = event.id;
     return this.http.delete<any>(`${apiSql}/${id}`, httpOptions);
   }
 
-  createEvent(event:any): Observable<any> {       
-    return this.http.post<any>(`${apiSql}`,event, httpOptions)
+  createEvent(event: any): Observable<any> {
+    return this.http.post<any>(`${apiSql}`, event, httpOptions)
   }
 
-  // updateEvent(event):Observable<any> {
-  //   let result = this.htpp.post<any>
-  // }
+  updateEvent(id: any, event: any): Observable<any> {
+    console.log(event);
+    // const id = event.id;
+    console.log(id);
+
+    return this.http.put<any>(`${apiSql}/${id}`, event, httpOptions);
+  }
 }

@@ -1,4 +1,4 @@
-<main>
+<main style="position: relative;">
     <div class="showcase">
         <div class="showcase-top">
             <h1>el mundo es un gran lugar para correr</h1>
@@ -33,7 +33,9 @@
                     <td>{{event.type}}</td>
                     <td>{{event.route_type}}</td>
                     <td>{{event.distance}}</td>
-                    <td class="info-flex"><button class="info-btn" (click)="updateEvent(event)">Edit</button><button class="info-btn" (click)="delEvent(event)">Del</button>
+                    <td class="info-flex"><button class="info-btn"
+                            (click)="updateEventModal(event)">Edit</button><button class="info-btn"
+                            (click)="delEvent(event)">Del</button>
                     </td>
                 </tr>
                 }
@@ -45,6 +47,9 @@
 
             </tbody>
         </table>
-        <button routerLink="/modal" class="info-add">Add race</button>
+        <button (click)="createEventModal()" class="info-add">Add race</button>
     </section>
 </main>
+@if(showModal) {
+<app-modal [mode]="modalMode" [eventData]="selectedEvent" (modalChanged)="toggleModal()"></app-modal>
+}

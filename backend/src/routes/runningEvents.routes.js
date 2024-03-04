@@ -6,7 +6,8 @@ const router = Router();
 router.get('/running_events', getEvents);
 router.get('/running_events/:id', getEvent);
 router.post('/running_events', createEvent)
-router.patch('/running_events/:id', updateEvent);
+router.put('/running_events/:id', updateEvent)
+// router.patch('/running_events/:id', updateEvent);
 router.delete('/running_events/:id', delEvent);
 
 export default router;

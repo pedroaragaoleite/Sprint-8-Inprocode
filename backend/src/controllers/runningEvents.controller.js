@@ -48,7 +48,7 @@ export const createEvent = async (req, res) => {
 
 export const updateEvent = async (req, res) => {
     try {
-        const id = req.params;
+        const { id } = req.params;
         const { event_date, name, city, type, route_type, distance } = req.body;
         const [result] = await pool.query('UPDATE running_events SET event_date = IFNULL(?, event_date), name = IFNULL(?, name), city = IFNULL(?, city), type = IFNULL(?, type), route_type = IFNULL(?, route_type), distance = IFNULL(?, distance) WHERE id = ?', [event_date, name, city, type, route_type, distance, id])
         if (result.affectedRows === 0) return res.status(404).json({

@@ -1,32 +1,31 @@
-
 <div id="modal">
-    <form [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
-        <div>
-            <label for="date">Date</label>
-            <input type="date" name="date" id="date" formControlName="event_date">
-        </div>
-        <div>
-            <label for="name">Event Name</label>
-            <input type="text" name="name" id="name" formControlName="name">
-        </div>
-        <div>
-            <label for="city">City</label>
-            <input type="text" name="city" id="city" formControlName="city">
-        </div>
-        <div>
-            <label for="type">Type</label>
-            <input type="text" name="type" id="type" formControlName="type">
-        </div>
-        <div>
-            <label for="route_type">Route Type</label>
-            <input type="text" name="" id="route_type" formControlName="route_type">
-        </div>
-        <div>
-            <label for="distance">Distance</label>
-            <input type="number" name="distance" id="distance" formControlName="distance">
-        </div>
-        <div>
-            <button type="submit">Add Race</button>
-        </div>
-    </form>
+    <div class="modal_container">
+        <h2>{{mode === 'create' ? 'Create Event' : 'Update Event'}}</h2>
+        <form class="modal_form" [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
+            <div class="modal_inputs">
+                <input type="date" name="date" id="date" formControlName="event_date">
+            </div>
+            <div class="modal_inputs">
+                <input placeholder="Race name" type="text" name="name" id="name" formControlName="name">
+            </div>
+            <div class="modal_inputs">
+                <input placeholder="City" type="text" name="city" id="city" formControlName="city">
+            </div>
+            <div class="modal_inputs">
+                <input placeholder="Race type" type="text" name="type" id="type" formControlName="type">
+            </div>
+            <div class="modal_inputs">
+                <input placeholder="Route type" type="text" name="" id="route_type" formControlName="route_type">
+            </div>
+            <div class="modal_inputs">
+                <input placeholder="Distance in Kms..." type="number" name="distance" id="distance"
+                    formControlName="distance">
+            </div>
+            <div>
+                <button class="modal_btn" type="submit">{{mode === 'create' ? 'Create race': 'Update race'}}</button>
+                <button (click)="close()" class="modal_btn-cancel">CANCEL</button>
+            </div>
+        </form>
+    </div>
+    <!-- <button (click)="close()">X</button> -->
 </div>

@@ -6,6 +6,9 @@ import { EventsData } from '../../interfaces/events-data';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ModalComponent } from '../../components/modal/modal.component';
+import { SharedService } from '../../services/shared/shared.service';
+
 
 
 
@@ -13,7 +16,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FontAwesomeModule, DatePipe, RouterLink],
+  imports: [FontAwesomeModule, DatePipe, RouterLink, ModalComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -21,22 +24,33 @@ export class HomeComponent implements OnInit {
   faMapLocation: any = faMapLocation;
   eventsResults: EventsData[] = [];
 
+  showModal: boolean = false;
+  modalMode: "create" | "update" = "create";
+  selectedEvent: EventsData | null = null;
+
   tableRows: any = document.getElementsByTagName('tbody');
   // rows: any = this.tableRows.getElementsByTagName('td');
 
-  constructor(private databaseService: DatabaseService, private http: HttpClient, private datePipe: DatePipe) {
+  toggleModal() {
+    this.showModal = !this.showModal;
+  }
+
+  constructor(private sharedService: SharedService, private databaseService: DatabaseService, private http: HttpClient, private datePipe: DatePipe) {
     // console.log(this.rows.length);
   }
 
   ngOnInit(): void {
+    this.sharedService.eventRefresh$.subscribe(() => {
+      this.getAllEvents();
+    })
     this.getAllEvents();
   }
 
-  goToSection(event:Event):void {
+  goToSection(event: Event): void {
     event.preventDefault();
     const section = (event.target as HTMLAnchorElement).getAttribute('href');
-    if(section && document.querySelector(section)) {
-      document.querySelector(section)?.scrollIntoView({behavior: 'smooth'})
+    if (section && document.querySelector(section)) {
+      document.querySelector(section)?.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
@@ -52,39 +66,50 @@ export class HomeComponent implements OnInit {
    * @return A string representing the formatted date.
    */
 
-  changeDate(date: Date):string {
+  changeDate(date: Date): string {
     return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
   }
 
   getAllEvents(): void {
     this.databaseService.getEvents()
       .subscribe((events: EventsData[]) => {
-        
+
         this.eventsResults = events.map((event: any) => {
           const formattedDate = this.changeDate(new Date(event.event_date));
           // console.log(event);
-          
-          return {...event, event_date: formattedDate}; 
+
+          return { ...event, event_date: formattedDate };
         });
         // console.log(this.eventsResults);
-        
+
       })
   }
 
-  updateEvent(even:any):void {
+  createEventModal() {
+    this.modalMode = 'create';
+    this.selectedEvent = null;
+    this.showModal = true;
+  }
+
+
+  updateEventModal(event: any): void {
+    this.modalMode = 'update';
+    this.selectedEvent = event;
+    this.showModal = true;
+    console.log(this.selectedEvent);
 
   }
 
-  delEvent(event:any):void{
+  delEvent(event: any): void {
     this.databaseService.deleteEvent(event)
-    .subscribe({
-      next: () => {
-        this.getAllEvents();
-      },
-      error: (error) => {
-        console.error("Error deleting event: ", error)
-      }
-    }) 
-   
+      .subscribe({
+        next: () => {
+          this.getAllEvents();
+        },
+        error: (error) => {
+          console.error("Error deleting event: ", error)
+        }
+      })
+
   }
 }

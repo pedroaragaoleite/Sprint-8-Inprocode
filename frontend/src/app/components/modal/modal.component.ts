@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventsData } from '../../interfaces/events-data';
 import { DatabaseService } from '../../services/database/database.service';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from '../../services/shared/shared.service';
+
 
 
 @Component({
@@ -14,13 +16,19 @@ import { Router } from '@angular/router';
 })
 export class ModalComponent implements OnInit {
 
-  isSubmited:boolean = false;
+  isSubmited: boolean = false;
+  @Input() mode: 'create' | 'update' = 'create';
+  @Input() eventData: EventsData | null = null;
+  @Output() modalChanged: EventEmitter<void> = new EventEmitter();
+  // @Output() getEvents: EventEmitter<any> = new EventEmitter();
 
-constructor(private fb : FormBuilder, private dbService: DatabaseService, private router : Router) {} 
+  isShowing: boolean = false;
 
-ngOnInit() {
-  
-}
+  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder, private dbService: DatabaseService, private router: Router, private sharedService: SharedService) { }
+
+  ngOnInit() {
+
+  }
 
 
   newEventForm = this.fb.group({
@@ -32,30 +40,46 @@ ngOnInit() {
     distance: ["", [Validators.required, Validators.minLength(2)]]
   })
 
+  close() {
+    this.newEventForm.reset();
+    this.modalChanged.emit();
+    this.cdRef.detectChanges();
+    // console.log(this.modalChanged);
+  }
 
-onSubmit() {  
-  this.isSubmited = true; 
-  if(this.newEventForm.valid) {  
+  onSubmit() {
+    this.isSubmited = true;
+    if (this.newEventForm.valid) {
+      let data = { ...this.newEventForm.value }
 
-    let data = {...this.newEventForm.value}
+      const request$ = this.mode === 'create' ?
+        this.dbService.createEvent(data) : this.dbService.updateEvent(this.eventData?.id, data);
 
-    // const newEvent: EventsData = {
-    //   event_date: this.newEventForm.value.event_date as unknown as Date,
-    //   name: this.newEventForm.value.name as string,
-    //   city: this.newEventForm.value.city as string,
-    //   type: this.newEventForm.value.type as string,
-    //   route_type: this.newEventForm.value.route_type as string,
-    //   distance: this.newEventForm.value.distance as unknown as number,
-    // }
-    console.log(data);
-    this.dbService.createEvent(data)
-    .subscribe({
-      next: () => {
-        this.router.navigate(['/home']);        
-      }
-    })
-     
-  }  
-}
+      request$.subscribe({
+        next: () => {
+          this.sharedService.notifyEventChange();
+          this.router.navigate(['/home']);
+        }
+      })
+
+      //   if (this.mode === 'create') {
+
+      //     this.dbService.createEvent(data)
+      //       .subscribe({
+      //         next: () => {
+      //           this.router.navigate(['/home']);
+      //         }
+      //       })
+
+      //   } else {
+      //     this.dbService.updateEvent(this.eventData?.id, data)
+      //       .subscribe({
+      //         next: () => {
+      //           this.router.navigate(['/home'])
+      //         }
+      //       })
+      //   }
+    }
+  }
 }
 
