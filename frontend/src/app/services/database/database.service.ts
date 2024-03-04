@@ -20,7 +20,7 @@ export class DatabaseService {
 
   getEvents(): Observable<EventsData[]> {
     let result = this.http.get<EventsData[]>(`${apiSql}`, httpOptions);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 
@@ -29,9 +29,10 @@ export class DatabaseService {
     return this.http.delete<any>(`${apiSql}/${id}`, httpOptions);
   }
 
-  createEvent() {
-    
+  createEvent(event:any): Observable<any> {       
+    return this.http.post<any>(`${apiSql}`,event, httpOptions)
   }
+
   // updateEvent(event):Observable<any> {
   //   let result = this.htpp.post<any>
   // }
