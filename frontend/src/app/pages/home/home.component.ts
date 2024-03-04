@@ -29,15 +29,37 @@ export class HomeComponent implements OnInit {
     this.getAllEvents();
   }
 
+  goToSection(event:Event):void {
+    event.preventDefault();
+    const section = (event.target as HTMLAnchorElement).getAttribute('href');
+    if(section && document.querySelector(section)) {
+      document.querySelector(section)?.scrollIntoView({behavior: 'smooth'})
+    }
+  }
+
   getAllEvents(): void {
     this.databaseService.getEvents()
       .subscribe((events: EventsData[]) => {
-        console.log(events);
-
         this.eventsResults = events;
         console.log(this.eventsResults);
 
       })
   }
 
+  updateEvent(even:any):void {
+
+  }
+
+  delEvent(event:any):void{
+    this.databaseService.deleteEvent(event)
+    .subscribe({
+      next: () => {
+        this.getAllEvents();
+      },
+      error: (error) => {
+        console.error("Error deleting event: ", error)
+      }
+    }) 
+   
+  }
 }

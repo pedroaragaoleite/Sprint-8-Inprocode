@@ -23,4 +23,16 @@ export class DatabaseService {
     console.log(result);
     return result;
   }
+
+  deleteEvent(event:any):Observable<any> {
+    const id = event.id;
+    return this.http.delete<any>(`${apiSql}/${id}`, httpOptions);
+  }
+
+  createEvent() {
+    
+  }
+  // updateEvent(event):Observable<any> {
+  //   let result = this.htpp.post<any>
+  // }
 }

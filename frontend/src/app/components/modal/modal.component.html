@@ -1,0 +1,32 @@
+
+<div id="modal">
+    <form [formGroup]="newEventForm">
+        <div>
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" FormControlName="event_date">
+        </div>
+        <div>
+            <label for="name">Event Name</label>
+            <input type="text" name="name" id="name" FormControlName="name">
+        </div>
+        <div>
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" FormControlName="city">
+        </div>
+        <div>
+            <label for="type">Type</label>
+            <input type="text" name="type" id="type" FormControlName="type">
+        </div>
+        <div>
+            <label for="route_type">Route Type</label>
+            <input type="text" name="" id="route_type" FormControlName="route_type">
+        </div>
+        <div>
+            <label for="distance">Distance</label>
+            <input type="number" name="distance" id="distance" FormControlName="distance">
+        </div>
+        <div>
+            <button (click)="onSubmit()">Add Race</button>
+        </div>
+    </form>
+</div>

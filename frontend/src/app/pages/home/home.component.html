@@ -7,11 +7,11 @@
                 carreras</a>
         </div>
         <span class="showcase-down">
-            <a href="#info">></a>
+            <a href="#table" (click)="goToSection($event)">></a>
         </span>
     </div>
     <section id="info">
-        <table class="table">
+        <table id="table" class="table">
             <thead>
                 <tr>
                     <th>Date</th>
@@ -33,7 +33,7 @@
                     <td>{{event.type}}</td>
                     <td>{{event.route_type}}</td>
                     <td>{{event.distance}}</td>
-                    <td class="info-flex"><button class="info-btn">Edit</button><button class="info-btn">Del</button>
+                    <td class="info-flex"><button class="info-btn" (click)="updateEvent(event)">Edit</button><button class="info-btn" (click)="delEvent(event)">Del</button>
                     </td>
                 </tr>
                 }
