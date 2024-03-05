@@ -85,6 +85,8 @@ export class HomeComponent implements OnInit {
       })
   }
 
+
+
   createEventModal() {
     this.modalMode = 'create';
     this.selectedEvent = null;
@@ -92,12 +94,26 @@ export class HomeComponent implements OnInit {
   }
 
 
+  // getEvent(event:any) {
+  //   this.databaseService.getEvent(event)
+  //   .subscribe({
+  //     next: (res) => {
+  //       console.log(res);
+        
+  //     },
+  //     error: (error) => {
+  //       console.error("Something is wrong", error);
+        
+  //     }
+  //   })
+  // }
+
   updateEventModal(event: any): void {
     this.modalMode = 'update';
     this.selectedEvent = event;
     this.showModal = true;
     console.log(this.selectedEvent);
-
+    // this.getEvent(event)
   }
 
   delEvent(event: any): void {
