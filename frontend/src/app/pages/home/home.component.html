@@ -49,9 +49,11 @@
         </table>
         <button (click)="downloadEvents()" class="info-csv">Download csv</button>
         <button (click)="createEventModal()" class="info-add">Add race</button>
-        
+
     </section>
 </main>
 @if(showModal) {
 <app-modal [mode]="modalMode" [eventData]="selectedEvent" (modalChanged)="toggleModal()"></app-modal>
 }
+
+<app-footer></app-footer>

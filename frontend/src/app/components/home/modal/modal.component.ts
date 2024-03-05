@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { EventsData } from '../../interfaces/events-data';
-import { DatabaseService } from '../../services/database/database.service';
+import { EventsData } from '../../../interfaces/events-data';
+import { DatabaseService } from '../../../services/database/database.service';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SharedService } from '../../services/shared/shared.service';
+import { SharedService } from '../../../services/shared/shared.service';
 
 
 
@@ -22,28 +22,27 @@ export class ModalComponent implements OnInit {
   @Output() modalChanged: EventEmitter<void> = new EventEmitter();
   // @Output() getEvents: EventEmitter<any> = new EventEmitter();
 
-  
+
   constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder, private dbService: DatabaseService, private router: Router, private sharedService: SharedService) { }
 
   ngOnInit() {
-    console.log(this.eventData);
-    if(this.mode==='update' && this.eventData) {
+    if (this.mode === 'update' && this.eventData) {
       const eventDate = new Date(this.eventData.event_date);
-      const distanceNumber = Number(this.eventData.distance)    
-      
+      const distanceNumber = Number(this.eventData.distance)
+
       this.newEventForm.patchValue({
         event_date: eventDate.toISOString().substring(0, 10),
         name: this.eventData.name,
         city: this.eventData.city,
         type: this.eventData.type,
         route_type: this.eventData.route_type,
-        distance: distanceNumber 
+        distance: distanceNumber
       });
     }
   }
 
-  
-  
+
+
   newEventForm = this.fb.group({
     event_date: ["", [Validators.required]],
     name: ["", [Validators.required, Validators.minLength(5)]],
@@ -74,7 +73,7 @@ export class ModalComponent implements OnInit {
           this.close();
           this.router.navigate(['/home']);
         }
-      });  
+      });
     }
   }
 }

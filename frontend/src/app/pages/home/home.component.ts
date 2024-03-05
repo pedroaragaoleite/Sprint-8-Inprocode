@@ -6,8 +6,9 @@ import { EventsData } from '../../interfaces/events-data';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ModalComponent } from '../../components/modal/modal.component';
+import { ModalComponent } from '../../components/home/modal/modal.component';
 import { SharedService } from '../../services/shared/shared.service';
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 
 
@@ -16,7 +17,7 @@ import { SharedService } from '../../services/shared/shared.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FontAwesomeModule, DatePipe, RouterLink, ModalComponent],
+  imports: [FontAwesomeModule, DatePipe, RouterLink, ModalComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -90,13 +91,12 @@ export class HomeComponent implements OnInit {
     this.selectedEvent = null;
     this.showModal = true;
   }
-  
+
   updateEventModal(event: any): void {
     this.modalMode = 'update';
     this.selectedEvent = event;
     this.showModal = true;
-    console.log(this.selectedEvent);
-    // this.getEvent(event)
+
   }
 
   delEvent(event: any): void {
@@ -123,15 +123,15 @@ export class HomeComponent implements OnInit {
         event.route_type,
         event.distance
       ].join(','))
-      ].join('\n');
+    ].join('\n');
 
-      console.log(rows);
-      
+    console.log(rows);
 
-      const blob = new Blob([rows], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'events.csv'; // Name of the file to download
-      link.click();
+
+    const blob = new Blob([rows], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'events.csv'; // Name of the file to download
+    link.click();
   }
 }

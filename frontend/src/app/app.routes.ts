@@ -3,7 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { ChartComponent } from './pages/chart/chart.component';
 import { MapComponent } from './pages/map/map.component';
-import { ModalComponent } from './components/modal/modal.component';
+import { ModalComponent } from './components/home/modal/modal.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },

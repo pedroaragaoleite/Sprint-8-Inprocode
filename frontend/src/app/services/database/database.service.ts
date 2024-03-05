@@ -38,9 +38,6 @@ export class DatabaseService {
   }
 
   updateEvent(id: any, event: any): Observable<any> {
-    console.log(event);
-    // const id = event.id;
-    console.log(id);
 
     return this.http.put<any>(`${apiSql}/${id}`, event, httpOptions);
   }
