@@ -16,6 +16,7 @@
     "mysql2": "^3.9.2"
   },
   "devDependencies": {
+    "@types/node": "^20.11.24",
     "nodemon": "^3.1.0"
   },
   "description": ""

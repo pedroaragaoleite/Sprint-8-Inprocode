@@ -2,10 +2,10 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
+// or "const mapboxgl = require('mapbox-gl');"
 
-import mapboxgl from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
 
-mapboxgl.accessToken = process.env['NG_APP_MAP_ACCESS_TOKEN'] as string;
+// mapboxgl.accessToken = as string;
 
 
 if (!navigator.geolocation) {

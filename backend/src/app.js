@@ -13,6 +13,11 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
+
+app.get('/api/config', (req, res) => {
+    res.json({ MAPAPI: process.env.MAPAPI })
+})
+
 // app.use(runningEventsRoutes);
 app.use('/api', runningEventsRoutes);
 

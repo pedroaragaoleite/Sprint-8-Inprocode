@@ -1,17 +1,23 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { Observable } from 'rxjs';
+HttpClient
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
+  private apiUrl = 'http://localhost:3000/api/config';
 
+  getConfig(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}`);
+  }
   public userLocation?: [number, number];
 
   get isUserLocationReady(): boolean {
     return !!this.userLocation;
   }
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.getUserLocation();
   }
 
