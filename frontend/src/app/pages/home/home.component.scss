@@ -101,11 +101,13 @@ thead th {
 
 tbody tr {
     border-bottom: 1px solid gray;
+   
 }
 
 tbody td {
     font-size: 14px;
     padding: 20px 10px;
+   
 
 }
 
@@ -115,19 +117,82 @@ tbody td {
 
 .bg-even {
     background-color: #4e535a;
+    &:hover {
+        background: #0f1011 !important;
+        transition: 1s ease;
+    }
 }
 
 .info {
+    margin-bottom: 60px;
     &-flex {
         display: flex;
         justify-content: space-around;
     }
 
     &-btn {
-        background: #ffffff;
-        border: none;
-        padding: 3px 3px;
+        
+        &_update {
+            background: #d4f806;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            &:hover {
+                background: #cee646;
+        transition: 1s ease;
+
+            }
+            
+        }
+        &_del {
+            border-radius: 5px;
+            background: #ff4e4e;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            color: #ffffff;
+            &:hover {
+                background: #f07c7c;
+        transition: 1s ease;
+
+            }
+        }
+    }
+    &-add {
+        font-size: 12px;
+        padding: 10px 20px;
         cursor: pointer;
+        background: #057e01;
+        border: none;
+        color: #ffffff;
+        // text-transform: uppercase;
+        letter-spacing: 3px;
+        border-radius: 5px;
+        &:hover {
+        background: #87fa83;
+        transition: 1s ease;
+
+
+        }
+    }
+    &-csv {
+        font-size: 12px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background: #0d7ee7;
+        border: none;
+        color: #ffffff;
+        // text-transform: uppercase;
+        letter-spacing: 3px;
+        border-radius: 5px;
+        margin-right: 15px;
+        &:hover {
+        background: #7ebaf1;
+        transition: 1s ease;
+
+
+        }
     }
 }
 

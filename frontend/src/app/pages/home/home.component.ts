@@ -85,29 +85,12 @@ export class HomeComponent implements OnInit {
       })
   }
 
-
-
   createEventModal() {
     this.modalMode = 'create';
     this.selectedEvent = null;
     this.showModal = true;
   }
-
-
-  // getEvent(event:any) {
-  //   this.databaseService.getEvent(event)
-  //   .subscribe({
-  //     next: (res) => {
-  //       console.log(res);
-        
-  //     },
-  //     error: (error) => {
-  //       console.error("Something is wrong", error);
-        
-  //     }
-  //   })
-  // }
-
+  
   updateEventModal(event: any): void {
     this.modalMode = 'update';
     this.selectedEvent = event;
@@ -127,5 +110,28 @@ export class HomeComponent implements OnInit {
         }
       })
 
+  }
+
+  downloadEvents() {
+    const rows = [
+      ['Date', 'Name', 'City', 'Route', 'Route Type', 'Distance'],
+      this.eventsResults.map(event => [
+        event.event_date,
+        event.name,
+        event.city,
+        event.type,
+        event.route_type,
+        event.distance
+      ].join(','))
+      ].join('\n');
+
+      console.log(rows);
+      
+
+      const blob = new Blob([rows], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'events.csv'; // Name of the file to download
+      link.click();
   }
 }

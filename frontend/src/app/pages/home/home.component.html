@@ -20,7 +20,7 @@
                     <th>Type</th>
                     <th>Route Type</th>
                     <th>Distance</th>
-                    <th>Placeholder</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,9 +33,9 @@
                     <td>{{event.type}}</td>
                     <td>{{event.route_type}}</td>
                     <td>{{event.distance}}</td>
-                    <td class="info-flex"><button class="info-btn"
-                            (click)="updateEventModal(event)">Edit</button><button class="info-btn"
-                            (click)="delEvent(event)">Del</button>
+                    <td class="info-flex">
+                        <button class="info-btn_update" (click)="updateEventModal(event)">Edit</button>
+                        <button class="info-btn_del" (click)="delEvent(event)">Del</button>
                     </td>
                 </tr>
                 }
@@ -47,7 +47,9 @@
 
             </tbody>
         </table>
+        <button (click)="downloadEvents()" class="info-csv">Download csv</button>
         <button (click)="createEventModal()" class="info-add">Add race</button>
+        
     </section>
 </main>
 @if(showModal) {

@@ -20,25 +20,30 @@
 
         h2 {
             color: #ffffff;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
     }
 
     &_inputs {
         width: 400px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
 
         input {
             width: 100%;
-            padding: 16px;
+            padding: 12px;
             border-radius: 10px;
             border: none;
             background-color: #E9E8F0;
             font-size: 14px;
         }
     }
+    &-btns {
+        display: flex;
+        gap: 10px;
+    }
 
-    &_btn {
+    &_btn-create, &_btn-cancel {
         padding: 14px 24px;
         background-color: #4e535a;
         border: #4e535a;
@@ -51,19 +56,10 @@
         letter-spacing: 3px;
         cursor: pointer;
         margin-bottom: 20px;
-
-        &-cancel {
-            padding: 14px 24px;
-            background-color: #ffffff;
-            border: #4e535a;
-            font-weight: 700;
-            font-size: 0.875rem;
-            width: 100%;
-            border-radius: 30px;
-            color: #4e535a;
-            letter-spacing: 3px;
-            cursor: pointer;
-        }
+    }
+    &_btn-cancel {
+        background-color: #ffffff;
+        color: #353131;
     }
 
 

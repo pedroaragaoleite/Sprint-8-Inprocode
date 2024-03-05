@@ -21,8 +21,8 @@
                 <input placeholder="Distance in Kms..." type="number" name="distance" id="distance"
                     formControlName="distance">
             </div>
-            <div>
-                <button class="modal_btn" type="submit">{{mode === 'create' ? 'Create race': 'Update race'}}</button>
+            <div class="modal-btns">
+                <button class="modal_btn-create" type="submit">{{mode === 'create' ? 'Create race': 'Update race'}}</button>
                 <button (click)="close()" class="modal_btn-cancel">CANCEL</button>
             </div>
         </form>

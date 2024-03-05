@@ -29,13 +29,8 @@ export class ModalComponent implements OnInit {
     console.log(this.eventData);
     if(this.mode==='update' && this.eventData) {
       const eventDate = new Date(this.eventData.event_date);
-      // const distance = parseFloat(this.eventData.distance)
-      console.log(typeof this.eventData.distance );
-      const distanceNumber = Number(this.eventData.distance)
-      console.log(distanceNumber);
+      const distanceNumber = Number(this.eventData.distance)    
       
-      
-
       this.newEventForm.patchValue({
         event_date: eventDate.toISOString().substring(0, 10),
         name: this.eventData.name,
