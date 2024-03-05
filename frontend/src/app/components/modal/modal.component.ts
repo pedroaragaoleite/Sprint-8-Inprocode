@@ -22,22 +22,40 @@ export class ModalComponent implements OnInit {
   @Output() modalChanged: EventEmitter<void> = new EventEmitter();
   // @Output() getEvents: EventEmitter<any> = new EventEmitter();
 
-  isShowing: boolean = false;
-
+  
   constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder, private dbService: DatabaseService, private router: Router, private sharedService: SharedService) { }
 
   ngOnInit() {
+    console.log(this.eventData);
+    if(this.mode==='update' && this.eventData) {
+      const eventDate = new Date(this.eventData.event_date);
+      // const distance = parseFloat(this.eventData.distance)
+      console.log(typeof this.eventData.distance );
+      const distanceNumber = Number(this.eventData.distance)
+      console.log(distanceNumber);
+      
+      
 
+      this.newEventForm.patchValue({
+        event_date: eventDate.toISOString().substring(0, 10),
+        name: this.eventData.name,
+        city: this.eventData.city,
+        type: this.eventData.type,
+        route_type: this.eventData.route_type,
+        distance: distanceNumber 
+      });
+    }
   }
 
-
+  
+  
   newEventForm = this.fb.group({
     event_date: ["", [Validators.required]],
     name: ["", [Validators.required, Validators.minLength(5)]],
     city: ["", [Validators.required, Validators.minLength(3)]],
     type: ["", [Validators.required, Validators.minLength(3)]],
     route_type: ["", [Validators.required, Validators.minLength(3)]],
-    distance: ["", [Validators.required, Validators.minLength(2)]]
+    distance: [0, [Validators.required, Validators.minLength(1)]]
   })
 
   close() {
@@ -58,27 +76,10 @@ export class ModalComponent implements OnInit {
       request$.subscribe({
         next: () => {
           this.sharedService.notifyEventChange();
+          this.close();
           this.router.navigate(['/home']);
         }
-      })
-
-      //   if (this.mode === 'create') {
-
-      //     this.dbService.createEvent(data)
-      //       .subscribe({
-      //         next: () => {
-      //           this.router.navigate(['/home']);
-      //         }
-      //       })
-
-      //   } else {
-      //     this.dbService.updateEvent(this.eventData?.id, data)
-      //       .subscribe({
-      //         next: () => {
-      //           this.router.navigate(['/home'])
-      //         }
-      //       })
-      //   }
+      });  
     }
   }
 }
