@@ -29,6 +29,8 @@ export class ModalComponent implements OnInit {
     if (this.mode === 'update' && this.eventData) {
       const eventDate = new Date(this.eventData.event_date);
       const distanceNumber = Number(this.eventData.distance)
+      const latitudeNumber = Number(this.eventData.latitude)
+      const longitudeNumber = Number(this.eventData.longitude)
 
       this.newEventForm.patchValue({
         event_date: eventDate.toISOString().substring(0, 10),
@@ -36,7 +38,9 @@ export class ModalComponent implements OnInit {
         city: this.eventData.city,
         type: this.eventData.type,
         route_type: this.eventData.route_type,
-        distance: distanceNumber
+        distance: distanceNumber,
+        latitude: latitudeNumber,
+        longitude: longitudeNumber
       });
     }
   }
@@ -49,7 +53,9 @@ export class ModalComponent implements OnInit {
     city: ["", [Validators.required, Validators.minLength(3)]],
     type: ["", [Validators.required, Validators.minLength(3)]],
     route_type: ["", [Validators.required, Validators.minLength(3)]],
-    distance: [0, [Validators.required, Validators.minLength(1)]]
+    distance: [0, [Validators.required, Validators.minLength(1)]],
+    latitude: [0, [Validators.required, Validators.minLength(1)]],
+    longitude: [0, [Validators.required, Validators.minLength(1)]]
   })
 
   close() {

@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import runningEventsRoutes from './routes/runningEvents.routes.js';
+import { MAPAPI } from './config.js';
 
 
 
@@ -11,11 +12,13 @@ const corsOptions = {
     origin: 'http://localhost:4200', // Allow only requests from your Angular app
 };
 
+
 app.use(express.json());
 app.use(cors(corsOptions));
 
-app.get('/api/config', (req, res) => {
-    res.json({ MAPAPI: process.env.MAPAPI })
+app.get('/api/data', (req, res) => {
+    const data = MAPAPI;
+    res.json(data);
 })
 
 // app.use(runningEventsRoutes);

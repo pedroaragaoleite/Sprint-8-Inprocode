@@ -16,5 +16,10 @@ export class MapComponent {
     return this.placesService.isUserLocationReady;
   }
 
-  constructor(private placesService: PlacesService) { }
+  constructor(private placesService: PlacesService) { 
+  
+
+  }
+
+
 }

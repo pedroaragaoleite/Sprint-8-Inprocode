@@ -34,6 +34,8 @@ export class DatabaseService {
   }
 
   createEvent(event: any): Observable<any> {
+
+    // return this.http.get<any>('');
     return this.http.post<any>(`${apiSql}`, event, httpOptions)
   }
 

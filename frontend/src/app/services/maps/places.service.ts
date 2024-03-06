@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-HttpClient
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
-  private apiUrl = 'http://localhost:3000/api/config';
+  private apiUrl = 'http://localhost:3000/api/data';
+  private apiSql = 'http://localhost:3000/api/map_coords';
 
   getConfig(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}`);
@@ -35,5 +37,9 @@ export class PlacesService {
         }
       )
     })
+  }
+
+  getAllLocations(): Observable<any> {
+    return this.http.get<any>(`${this.apiSql}`);
   }
 }

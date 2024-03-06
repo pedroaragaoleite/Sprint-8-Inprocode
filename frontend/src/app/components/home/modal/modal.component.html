@@ -21,6 +21,19 @@
                 <input placeholder="Distance in Kms..." type="number" name="distance" id="distance"
                     formControlName="distance">
             </div>
+            <div class="modal_inputs modal-geo">
+                <div>
+                    <label for="latitude">Latitude</label>
+                    <input type="number" name="latitude" id="latitude"
+                    formControlName="latitude">
+                </div>
+                <div>
+                    <label for="longitude">Longitude</label>
+                    <input type="number" name="longitude" id="longitude"
+                    formControlName="longitude">
+                </div>
+                
+            </div>
             <div class="modal-btns">
                 <button class="modal_btn-create" type="submit">{{mode === 'create' ? 'Create race': 'Update race'}}</button>
                 <button (click)="close()" class="modal_btn-cancel">CANCEL</button>
