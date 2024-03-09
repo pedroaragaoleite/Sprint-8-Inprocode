@@ -10,5 +10,7 @@ CREATE TABLE running_events (
     city VARCHAR(255) NOT NULL,
     type VARCHAR(50) NOT NULL,
     route_type VARCHAR(50) NOT NULL,
-    distance DECIMAL(10, 2) NOT NULL 
+    distance DECIMAL(10, 2) NOT NULL,
+    latitude DECIMAL(10,4) NOT NULL
+    longitud DECIMAL(11,4) NOT NULL
 );

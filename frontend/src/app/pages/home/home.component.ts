@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMapLocation } from '@fortawesome/free-solid-svg-icons';
 import { DatabaseService } from '../../services/database/database.service';
 import { EventsData } from '../../interfaces/events-data';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ModalComponent } from '../../components/home/modal/modal.component';
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     this.showModal = !this.showModal;
   }
 
-  constructor(private sharedService: SharedService, private databaseService: DatabaseService, private http: HttpClient, private datePipe: DatePipe) {
+  constructor(private sharedService: SharedService, private databaseService: DatabaseService, private datePipe: DatePipe) {
     // console.log(this.rows.length);
   }
 
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  createEventModal() {
+  createEventModal(): void {
     this.modalMode = 'create';
     this.selectedEvent = null;
     this.showModal = true;

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -8,11 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class PlacesService {
   private apiUrl = 'http://localhost:3000/api/data';
-  private apiSql = 'http://localhost:3000/api/map_coords';
+  // private apiSql = 'http://localhost:3000/api/map_coords';
 
   getConfig(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}`);
   }
+
   public userLocation?: [number, number];
 
   get isUserLocationReady(): boolean {
@@ -39,7 +41,9 @@ export class PlacesService {
     })
   }
 
-  getAllLocations(): Observable<any> {
-    return this.http.get<any>(`${this.apiSql}`);
-  }
+
+
+  // getAllLocations(): Observable<any> {
+  //   return this.http.get<any>(`${this.apiSql}`);
+  // }
 }

@@ -23,14 +23,25 @@ export class ModalComponent implements OnInit {
   // @Output() getEvents: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder, private dbService: DatabaseService, private router: Router, private sharedService: SharedService) { }
+  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder, private dbService: DatabaseService, private router: Router, private sharedService: SharedService) {
+
+  }
 
   ngOnInit() {
+    console.log(this.mode);
+
     if (this.mode === 'update' && this.eventData) {
       const eventDate = new Date(this.eventData.event_date);
       const distanceNumber = Number(this.eventData.distance)
       const latitudeNumber = Number(this.eventData.latitude)
       const longitudeNumber = Number(this.eventData.longitude)
+
+      console.log(eventDate);
+      console.log(this.eventData.event_date);
+      console.log(eventDate.toISOString().substring(0, 10));
+
+
+
 
       this.newEventForm.patchValue({
         event_date: eventDate.toISOString().substring(0, 10),

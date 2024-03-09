@@ -1,1 +1,23 @@
-<p>calendar works!</p>
+<main class="calendar">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+
+
+</main>
+@if(calendarModalShow) {
+<div class="calendar-modal">
+    <h4>Choose well...</h4>
+    <div class="calendar-btns">
+        <button (click)="updateEv()" class="calendar-btn btn-update">Update Event</button>
+        <button id="deleteEV" (click)="deleteEv()" class="calendar-btn btn-cancel">Delete</button>
+        <button (click)="close()" class="calendar-btn btn-new">Cancel</button>
+    </div>
+</div>
+}
+
+@if(showModal) {
+<app-modal [mode]="modalMode" [eventData]="selectedEvent" (modalChanged)="toggleModal()"></app-modal>
+}
+
+@if(showModal) {
+<h1>Show modal true</h1>
+}

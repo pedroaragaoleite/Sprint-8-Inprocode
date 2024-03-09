@@ -27,13 +27,17 @@ export class MapViewComponent implements AfterViewInit {
     // this.getAllLocations(); 
   }
 
-// mapToken = this.placesService.getConfig();
+  // mapToken = this.placesService.getConfig();
 
 
 
   ngAfterViewInit(): void {
+    this.initMap();
+  }
+
+  initMap(): void {
     this.placesService.getConfig().pipe(
-      switchMap((config:any) => {
+      switchMap((config: string) => {
         mapboxgl.accessToken = config;
         return this.dbService.getEvents();
       }),
@@ -50,16 +54,16 @@ export class MapViewComponent implements AfterViewInit {
         const el = document.createElement('div');
         el.innerHTML = location.name;
 
-        
+
 
         const marker = new mapboxgl.Marker()
           .setLngLat([location.longitude, location.latitude])
           .addTo(map);
 
-          const popup = new mapboxgl.Popup({offset : 25})
+        const popup = new mapboxgl.Popup({ offset: 25 })
           .setText(location.name);
 
-          marker.setPopup(popup);
+        marker.setPopup(popup);
       });
     })
   }

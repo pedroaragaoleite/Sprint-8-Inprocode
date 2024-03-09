@@ -10,7 +10,7 @@ export const routes: Routes = [
     { path: 'calendar', component: CalendarComponent },
     { path: 'chart', component: ChartComponent },
     { path: 'map', component: MapComponent },
-    { path: 'modal', component: ModalComponent },
+    // { path: 'modal', component: ModalComponent },
     { path: '**', redirectTo: '/home' }
 
 ];

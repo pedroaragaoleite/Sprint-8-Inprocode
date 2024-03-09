@@ -28,8 +28,8 @@ export const getEvent = async (req, res) => {
 
 export const createEvent = async (req, res) => {
     try {
-        const { event_date, name, city, type, route_type, distance, latitude, longitude } = req.body;
-        const [rows] = await pool.query('INSERT INTO running_events (event_date, name, city, type, route_type, distance, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [event_date, name, city, type, route_type, distance, latitude, longitude]);
+        const { event_date, name, city, type, route_type, distance, latitude, longitude, start, end } = req.body;
+        const [rows] = await pool.query('INSERT INTO running_events (event_date, name, city, type, route_type, distance, latitude, longitude, start, end) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [event_date, name, city, type, route_type, distance, latitude, longitude, start, end]);
         res.send({
             id: rows.insertId,
             event_date,
@@ -39,7 +39,9 @@ export const createEvent = async (req, res) => {
             route_type,
             distance,
             latitude,
-            longitude
+            longitude,
+            start,
+            end
         })
     } catch (error) {
         return res.status(500).json({
@@ -52,7 +54,7 @@ export const updateEvent = async (req, res) => {
     try {
         const { id } = req.params;
         const { event_date, name, city, type, route_type, distance, latitude, longitude } = req.body;
-        const [result] = await pool.query('UPDATE running_events SET event_date = IFNULL(?, event_date), name = IFNULL(?, name), city = IFNULL(?, city), type = IFNULL(?, type), route_type = IFNULL(?, route_type), distance = IFNULL(?, distance), latitude= IFNULL(?, latitude), longitude = IFNULL(?, longitude) WHERE id = ?', [event_date, name, city, type, route_type, distance,latitude, longitude, id])
+        const [result] = await pool.query('UPDATE running_events SET event_date = IFNULL(?, event_date), name = IFNULL(?, name), city = IFNULL(?, city), type = IFNULL(?, type), route_type = IFNULL(?, route_type), distance = IFNULL(?, distance), latitude= IFNULL(?, latitude), longitude = IFNULL(?, longitude) WHERE id = ?', [event_date, name, city, type, route_type, distance, latitude, longitude, id])
         if (result.affectedRows === 0) return res.status(404).json({
             message: "Event not found"
         })

@@ -11,6 +11,6 @@ router.put('/running_events/:id', updateEvent)
 router.delete('/running_events/:id', delEvent);
 
 // maps
-router.get('/map_coords', getLocations);
+// router.get('/map_coords', getLocations);
 
 export default router;

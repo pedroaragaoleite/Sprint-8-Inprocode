@@ -7,5 +7,7 @@ export interface EventsData {
     route_type: string,
     distance: number,
     latitude?: number,
-    longitude?: number
+    longitude?: number,
+    start?: Date,
+    end?: Date
 }

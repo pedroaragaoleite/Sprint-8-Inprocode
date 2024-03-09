@@ -5,7 +5,6 @@ import { MAPAPI } from './config.js';
 
 
 
-
 const app = express();
 
 const corsOptions = {
