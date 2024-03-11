@@ -63,7 +63,7 @@ export class CalendarComponent implements OnInit {
   }
 
   changeDate(date: Date): string {
-    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+    return this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm') || '';
   }
 
   ngOnInit(): void {
@@ -78,8 +78,11 @@ export class CalendarComponent implements OnInit {
     this.dbServices.getEvents()
       .subscribe((events: EventsData[]) => {
         this.calendarEvents = events.map((event: any) => {
-          const formattedDate = this.changeDate(new Date(event.start));
-          return { title: event.name, start: formattedDate }
+          // const formattedDateStart = this.changeDate(new Date(event.start));
+          // const formattedDateEnd = this.changeDate(new Date(event.start));
+          // console.log(formattedDateStart);
+          
+          return { title: event.name, start: this.changeDate(new Date(event.start)), end : this.changeDate(new Date(event.end)) }
         })
         this.calendarOptions = { ...this.calendarOptions, events: this.calendarEvents }
       })
@@ -108,6 +111,7 @@ export class CalendarComponent implements OnInit {
       map((events: EventsData[]) => events.find(event => event.name === title))
     )
   }
+
 
   removeEvent(event: any) {
     this.dbServices.deleteEvent(event)
@@ -145,13 +149,14 @@ export class CalendarComponent implements OnInit {
     eventClick: (opcion) => {
       this.deleteOrEdit(opcion.event.title);
     },
-    eventChange: (changeInfo) => {
-      let change = changeInfo.event;
-      console.log(change.title + ' was changed to ' + change.start)
-    },
+    // eventChange: (changeInfo) => {
+    //   let change = changeInfo.event;
+    //   console.log(change.title + ' was changed to ' + change.start)
+      
+    // },
     initialView: 'dayGridMonth',
     weekends: true,
-    editable: true,
+    // editable: true,
     selectable: true
   };
 

@@ -5,6 +5,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../services/shared/shared.service';
 import { DatePipe } from '@angular/common';
+import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
 
 
 
@@ -12,7 +13,7 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ValidationMessagesComponent],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
