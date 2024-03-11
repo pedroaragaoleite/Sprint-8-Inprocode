@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
+const apiSql = 'http://localhost:3000/api/'
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,6 +21,6 @@ export class CalendarService {
 
 
   createCalendarEvent(event: any): Observable<any> {
-    return this.http.post(`${environment.apiSql}`, event, httpOptions)
+    return this.http.post(`${apiSql}`, event, httpOptions)
   }
 }
