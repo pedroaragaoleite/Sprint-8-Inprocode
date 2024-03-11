@@ -78,7 +78,7 @@ export class CalendarComponent implements OnInit {
     this.dbServices.getEvents()
       .subscribe((events: EventsData[]) => {
         this.calendarEvents = events.map((event: any) => {
-          const formattedDate = this.changeDate(new Date(event.event_date));
+          const formattedDate = this.changeDate(new Date(event.start));
           return { title: event.name, start: formattedDate }
         })
         this.calendarOptions = { ...this.calendarOptions, events: this.calendarEvents }

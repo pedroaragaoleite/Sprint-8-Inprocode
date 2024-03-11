@@ -1,4 +1,71 @@
+
 <div id="modal">
+    <div class="modal_container">
+        <h2>{{mode === 'create' ? 'Create Event': 'Update Event'}}</h2>
+        <form class="max-w-sm mx-auto modal_form" [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
+            <!-- <div class="mb-5">
+                <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Date</label>
+                <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required type="date" name="date" id="date" formControlName="event_date">
+            </div> -->
+            <div class="modal-date mb-5">
+                <div class="form-inputs">
+                    <label for="start" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start at:</label>
+                    <input type="datetime-local" name="start" id="start" formControlName="start" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                </div>
+                <div class="form-inputs">
+                    <label for="end" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">End at:</label>
+                    <input type="datetime-local" name="end" id="end" formControlName="end" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                </div>
+            </div>
+            <div class="mb-5">
+                <label for="name" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event name</label>
+                <input type="name" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required  formControlName="name"/>
+            </div>
+            <div class="mb-5">
+                <label for="city" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place</label>
+                <input type="text" name="city"  formControlName="city" id="city" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+            </div>
+            <div class="mb-5 modal-type">
+                <div class="mb-5">
+                    <label for="type" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+                    <input type="text" name="type"  formControlName="type" id="type" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                </div>
+                <div class="mb-5">
+                    <label for="route_type" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Route type</label>
+                    <input type="text" name="route_type"  formControlName="route_type" id="city" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                </div>
+            </div>
+            
+            
+            <div class="modal_inputs modal-geo mb-5">
+                <div class="mb-5">
+                <label for="distance" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Distance</label>
+                <input type="number" name="distance"  formControlName="distance" id="distance" min="1" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+            </div>
+                <div>
+                    <label for="latitude" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Latitude</label>
+                    <input type="number" name="latitude" id="latitude" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required
+                    formControlName="latitude">
+                </div>
+                <div>
+                    <label for="longitude" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Longitude</label>
+                    <input type="number" name="longitude" id="longitude" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required formControlName="longitude">
+                </div>
+                
+            </div>
+            <div class="modal-btns">
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register new event</button>
+                <button (click)="close()" class=" text-black bg-white bg-white-700 hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-white-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
+    
+            </div>
+        </form>
+    </div>
+</div>
+
+  
+
+
+<!-- <div id="modal">
     <div class="modal_container">
         <h2>{{mode === 'create' ? 'Create Event' : 'Update Event'}}</h2>
         <form class="modal_form" [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
@@ -40,5 +107,6 @@
             </div>
         </form>
     </div>
-    <!-- <button (click)="close()">X</button> -->
-</div>
+    <button (click)="close()">X</button> -->
+<!-- </div> --> 
+

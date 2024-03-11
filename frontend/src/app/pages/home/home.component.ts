@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
    */
 
   changeDate(date: Date): string {
-    return this.datePipe.transform(date, 'yyyy/MM/dd') || '';
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
 
   getAllEvents(): void {
@@ -76,7 +76,9 @@ export class HomeComponent implements OnInit {
       .subscribe((events: EventsData[]) => {
 
         this.eventsResults = events.map((event: any) => {
-          const formattedDate = this.changeDate(new Date(event.event_date));
+          
+          
+          const formattedDate = this.changeDate(new Date(event.start));
           // console.log(event);
 
           return { ...event, event_date: formattedDate };
@@ -114,14 +116,16 @@ export class HomeComponent implements OnInit {
 
   downloadEvents() {
     const rows = [
-      ['Date', 'Name', 'City', 'Route', 'Route Type', 'Distance'],
+      ['Date', 'Name', 'City', 'Route', 'Route Type', 'Distance', 'start', 'end'],
       this.eventsResults.map(event => [
         event.event_date,
         event.name,
         event.city,
         event.type,
         event.route_type,
-        event.distance
+        event.distance,
+        event.start,
+        event.end
       ].join(','))
     ].join('\n');
 

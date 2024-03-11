@@ -37,6 +37,9 @@
             background-color: #E9E8F0;
             font-size: 14px;
         }
+        label {
+            color: #ffffff;
+        }
     }
     &-btns {
         display: flex;
@@ -62,10 +65,13 @@
         color: #353131;
     }
 
-    &-geo {
+    &-geo, &-type, &-date, &-btns {
         display: flex;
+        justify-content: space-between;
         gap: 10px;
     }
 
-
+    &-btns button {
+        width: 100%;
+    }
 }

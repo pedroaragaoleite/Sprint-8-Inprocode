@@ -24,14 +24,14 @@ export class ModalComponent implements OnInit {
 
 
 
-  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder, sharedServices: SharedService, private datePipe: DatePipe, private dbServices: DatabaseService, private router: Router) {
+  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder,private  sharedServices: SharedService, private datePipe: DatePipe, private dbServices: DatabaseService, private router: Router) {
     console.log(this.mode);
   }
 
   ngOnInit(): void {
 
     if (this.mode === "update" && this.eventData) {
-      const eventDate = new Date(this.eventData.event_date);
+      // const eventDate = new Date(this.eventData.event_date);
       const distanceNumber = Number(this.eventData.distance);
       const latitudeNumber = Number(this.eventData.latitude);
       const longitudeNumber = Number(this.eventData.longitude);
@@ -40,6 +40,7 @@ export class ModalComponent implements OnInit {
 
       // startDate = new Date(startDate)
 
+console.log(this.mode);
 
       console.log(startDate);
 
@@ -99,14 +100,19 @@ export class ModalComponent implements OnInit {
         end: this.newCalendarEventForm.get('end')?.value
       }
 
-      this.dbServices.createEvent(formData)
-        .subscribe({
-          next: (data) => {
-            console.log(data);
-            this.router.navigate(['/home']);
-          }
-        })
       console.log(formData);
+      
+      const resquest$ = this.mode === 'create' ?
+
+      this.dbServices.createEvent(formData) : this.dbServices.updateEvent(this.eventData?.id, formData);
+
+      resquest$.subscribe({
+        next: () => {
+          this.sharedServices.notifyEventChange();
+          this.close();
+        }
+      })
+
     }
   }
 

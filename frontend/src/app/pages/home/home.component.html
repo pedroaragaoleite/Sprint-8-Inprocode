@@ -42,9 +42,6 @@
                 } @else {
                 <span>no results</span>
                 }
-
-
-
             </tbody>
         </table>
         <button (click)="downloadEvents()" class="info-csv">Download csv</button>
@@ -55,5 +52,6 @@
 @if(showModal) {
 <app-modal [mode]="modalMode" [eventData]="selectedEvent" (modalChanged)="toggleModal()"></app-modal>
 }
+
 
 <app-footer></app-footer>
