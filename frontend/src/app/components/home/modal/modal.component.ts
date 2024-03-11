@@ -5,7 +5,8 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../services/shared/shared.service';
 import { DatePipe } from '@angular/common';
-import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
+import { distanceValidator, latitudeValidator, longitudeValidator } from '../../../Validators/custom-validators';
+
 
 
 
@@ -13,13 +14,13 @@ import { ValidationMessagesComponent } from '../../../shared/validation-messages
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, ValidationMessagesComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent implements OnInit {
 
-  isSubmited: boolean = false;
+  isSubmitted: boolean = false;
   @Input() mode: 'create' | 'update' = 'create';
   @Input() eventData: EventsData | null = null;
   @Output() modalChanged: EventEmitter<void> = new EventEmitter();
@@ -69,13 +70,13 @@ export class ModalComponent implements OnInit {
 
 
   newEventForm = this.fb.group({
-    name: ["", [Validators.required, Validators.minLength(5)]],
+    name: ["", [Validators.required, Validators.minLength(3)]],
     city: ["", [Validators.required, Validators.minLength(3)]],
     type: ["", [Validators.required, Validators.minLength(3)]],
     route_type: ["", [Validators.required, Validators.minLength(3)]],
-    distance: [0, [Validators.required, Validators.minLength(1)]],
-    latitude: [0, [Validators.required, Validators.minLength(1)]],
-    longitude: [0, [Validators.required, Validators.minLength(1)]],
+    distance: [0, [Validators.required, Validators.min(1), distanceValidator()]],
+    latitude: [0, [Validators.required, Validators.minLength(1), latitudeValidator()]],
+    longitude: [0, [Validators.required, Validators.minLength(1), longitudeValidator()]],
     start: ['', [Validators.required]],
     end: ['', [Validators.required]]
   })
@@ -88,7 +89,7 @@ export class ModalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isSubmited = true;
+    this.isSubmitted = true;
     if (this.newEventForm.valid) {
       let data = { ...this.newEventForm.value }
 

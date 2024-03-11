@@ -5,6 +5,7 @@ import { EventsData } from '../../../interfaces/events-data';
 import { DatePipe } from '@angular/common';
 import { DatabaseService } from '../../../services/database/database.service';
 import { Router } from '@angular/router';
+import { distanceValidator, latitudeValidator, longitudeValidator } from '../../../Validators/custom-validators';
 
 
 
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent implements OnInit {
-  isSubmited: boolean = false;
+  isSubmitted: boolean = false;
   @Input() mode: 'create' | 'update' = 'create';
   @Input() eventData: EventsData | null = null;
   @Output() modalChanged: EventEmitter<void> = new EventEmitter();
@@ -24,7 +25,7 @@ export class ModalComponent implements OnInit {
 
 
 
-  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder,private  sharedServices: SharedService, private datePipe: DatePipe, private dbServices: DatabaseService, private router: Router) {
+  constructor(private cdRef: ChangeDetectorRef, private fb: FormBuilder, private sharedServices: SharedService, private datePipe: DatePipe, private dbServices: DatabaseService, private router: Router) {
     console.log(this.mode);
   }
 
@@ -40,7 +41,7 @@ export class ModalComponent implements OnInit {
 
       // startDate = new Date(startDate)
 
-console.log(this.mode);
+      console.log(this.mode);
 
       console.log(startDate);
 
@@ -72,17 +73,17 @@ console.log(this.mode);
   newCalendarEventForm = this.fb.group({
     start: ["", [Validators.required]],
     end: ["", [Validators.required]],
-    title: ["", [Validators.required, Validators.minLength(5)]],
+    title: ["", [Validators.required, Validators.minLength(3)]],
     city: ["", [Validators.required, Validators.minLength(3)]],
     type: ["", [Validators.required, Validators.minLength(3)]],
     route_type: ["", [Validators.required, Validators.minLength(3)]],
-    distance: [0, [Validators.required, Validators.minLength(1)]],
-    latitude: [0, [Validators.required, Validators.minLength(1)]],
-    longitude: [0, [Validators.required, Validators.minLength(1)]]
+    distance: [0, [Validators.required, Validators.min(1), distanceValidator()]],
+    latitude: [0, [Validators.required, Validators.minLength(1), latitudeValidator()]],
+    longitude: [0, [Validators.required, Validators.minLength(1), longitudeValidator()]]
   })
 
   onSubmit() {
-    this.isSubmited = true;
+    this.isSubmitted = true;
     if (this.newCalendarEventForm.valid) {
       const date = this.newCalendarEventForm.get('start')!.value as string
       const formattedDate = this.changeDate(new Date(date));
@@ -101,10 +102,10 @@ console.log(this.mode);
       }
 
       console.log(formData);
-      
+
       const resquest$ = this.mode === 'create' ?
 
-      this.dbServices.createEvent(formData) : this.dbServices.updateEvent(this.eventData?.id, formData);
+        this.dbServices.createEvent(formData) : this.dbServices.updateEvent(this.eventData?.id, formData);
 
       resquest$.subscribe({
         next: () => {

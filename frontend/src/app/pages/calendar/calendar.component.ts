@@ -9,7 +9,7 @@ import { EventsData } from '../../interfaces/events-data';
 import { DatabaseService } from '../../services/database/database.service';
 import { DatePipe } from '@angular/common';
 import { CalendarData } from '../../interfaces/calendar-data';
-import { CalendarService } from '../../services/calendar.service';
+import { CalendarService } from '../../services/calendar/calendar.service';
 import { ModalComponent } from '../../components/calendar/modal/modal.component';
 import { map, of, switchMap } from 'rxjs';
 import { SharedService } from '../../services/shared/shared.service';
@@ -32,6 +32,7 @@ export class CalendarComponent implements OnInit {
   calendarEvents: CalendarData[] = [];
   selectedId: number | null = null;
   selEvent: any;
+  title: string = '';
 
   constructor(private sharedService: SharedService, private dbServices: DatabaseService, private datePipe: DatePipe, private calendarServices: CalendarService) { }
 
@@ -81,8 +82,8 @@ export class CalendarComponent implements OnInit {
           // const formattedDateStart = this.changeDate(new Date(event.start));
           // const formattedDateEnd = this.changeDate(new Date(event.start));
           // console.log(formattedDateStart);
-          
-          return { title: event.name, start: this.changeDate(new Date(event.start)), end : this.changeDate(new Date(event.end)) }
+
+          return { title: event.name, start: this.changeDate(new Date(event.start)), end: this.changeDate(new Date(event.end)) }
         })
         this.calendarOptions = { ...this.calendarOptions, events: this.calendarEvents }
       })
@@ -101,6 +102,7 @@ export class CalendarComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.selEvent = res;
+        this.title = res!.name
       }
     })
     this.calendarModalShow = true;
@@ -127,6 +129,11 @@ export class CalendarComponent implements OnInit {
       })
   }
 
+  // Manage to change the view to timeGrideDay after clicking in the day
+  handleDateClick(arg: any) {
+    let calendarApi = arg.view.calendar;
+    calendarApi.changeView('timeGridDay', arg.date);
+  }
 
   calendarOptions: CalendarOptions = {
     height: '100%',
@@ -145,15 +152,11 @@ export class CalendarComponent implements OnInit {
         click: () => this.addEvent()
       }
     },
-    dateClick: () => this.addEvent(),
+    dateClick: this.handleDateClick.bind(this), // ensure that inside handleDateClick, the keyword this refers to the component instance itself
+
     eventClick: (opcion) => {
       this.deleteOrEdit(opcion.event.title);
     },
-    // eventChange: (changeInfo) => {
-    //   let change = changeInfo.event;
-    //   console.log(change.title + ' was changed to ' + change.start)
-      
-    // },
     initialView: 'dayGridMonth',
     weekends: true,
     // editable: true,

@@ -1,69 +1,168 @@
-
 <div id="modal">
     <div class="modal_container">
-        <h2>{{mode === 'create' ? 'Create Event': 'Update Event'}}</h2>
-        <form class="max-w-sm mx-auto modal_form" [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
-            <!-- <div class="mb-5">
-                <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Date</label>
-                <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required type="date" name="date" id="date" formControlName="event_date">
-            </div> -->
+        <h2 class="text-gray-700">{{mode === 'create' ? 'Create Event': 'Modify Event'}}</h2>
+        <form class=" mx-auto modal_form" [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
             <div class="modal-date mb-5">
                 <div class="form-inputs">
-                    <label for="start" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start at:</label>
-                    <input type="datetime-local" name="start" id="start" formControlName="start" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                    <label for="start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
+                        at:</label>
+                    <input type="datetime-local" name="start" id="start" formControlName="start"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        required>
                 </div>
                 <div class="form-inputs">
-                    <label for="end" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">End at:</label>
-                    <input type="datetime-local" name="end" id="end" formControlName="end" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                    <label for="end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
+                        at:</label>
+                    <input type="datetime-local" name="end" id="end" formControlName="end"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        required>
                 </div>
             </div>
             <div class="mb-5">
-                <label for="name" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event name</label>
-                <input type="name" id="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required  formControlName="name"/>
-                <!-- <app-validation-messages [control]="newEventForm.get('name')"></app-validation-messages> -->
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                    name</label>
+                <input type="name" id="text"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    required formControlName="name" />
+                @if((newEventForm.get('name')?.touched || newEventForm.get('name')?.dirty || isSubmitted)
+                && newEventForm.get('name')?.errors) {
+                @if(newEventForm.get('name')?.errors?.['required']) {
+                <p class="contact-invalid">Event name is necessary</p>
+                }
+                @if(newEventForm.get('name')?.hasError('minlength') &&
+                !newEventForm.get('name')?.errors?.['required']) {
+                <p class="contact-invalid">Minimiun 3 characters</p>
+                }
+                }
             </div>
             <div class="mb-5">
-                <label for="city" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place</label>
-                <input type="text" name="city"  formControlName="city" id="city" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Place</label>
+                <input type="text" name="city" formControlName="city" id="city"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    required />
+                @if((newEventForm.get('city')?.touched || newEventForm.get('city')?.dirty || isSubmitted)
+                && newEventForm.get('city')?.errors) {
+                @if(newEventForm.get('city')?.errors?.['required']) {
+                <p class="contact-invalid">Place is necessary</p>
+                }
+                @if(newEventForm.get('city')?.hasError('minlength') &&
+                !newEventForm.get('city')?.errors?.['required']) {
+                <p class="contact-invalid">Minimiun 3 characters</p>
+                }
+                }
             </div>
             <div class="mb-5 modal-type">
                 <div class="mb-5">
-                    <label for="type" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
-                    <input type="text" name="type"  formControlName="type" id="type" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                    <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+                    <input type="text" name="type" formControlName="type" id="type"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        required />
+                    @if((newEventForm.get('type')?.touched || newEventForm.get('type')?.dirty || isSubmitted)
+                    && newEventForm.get('type')?.errors) {
+                    @if(newEventForm.get('type')?.errors?.['required']) {
+                    <p class="contact-invalid">Type of race is necessary</p>
+                    }
+                    @if(newEventForm.get('type')?.hasError('minlength') &&
+                    !newEventForm.get('type')?.errors?.['required']) {
+                    <p class="contact-invalid">Minimiun 3 characters</p>
+                    }
+                    }
                 </div>
                 <div class="mb-5">
-                    <label for="route_type" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Route type</label>
-                    <input type="text" name="route_type"  formControlName="route_type" id="city" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
+                    <label for="route_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Route
+                        type</label>
+                    <input type="text" name="route_type" formControlName="route_type" id="route_type"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        required />
+                    @if((newEventForm.get('route_type')?.touched || newEventForm.get('route_type')?.dirty ||
+                    isSubmitted)
+                    && newEventForm.get('route_type')?.errors) {
+                    @if(newEventForm.get('route_type')?.errors?.['required']) {
+                    <p class="contact-invalid">Route type is necessary</p>
+                    }
+                    @if(newEventForm.get('route_type')?.hasError('minlength') &&
+                    !newEventForm.get('route_type')?.errors?.['required']) {
+                    <p class="contact-invalid">Minimiun 3 characters</p>
+                    }
+                    }
                 </div>
             </div>
-            
-            
+
+
             <div class="modal_inputs modal-geo mb-5">
                 <div class="mb-5">
-                <label for="distance" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white">Distance</label>
-                <input type="number" name="distance"  formControlName="distance" id="distance" min="1" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
-            </div>
-                <div>
-                    <label for="latitude" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Latitude</label>
-                    <input type="number" name="latitude" id="latitude" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required
-                    formControlName="latitude">
+                    <label for="distance"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Distance</label>
+                    <input type="number" name="distance" formControlName="distance" id="distance" min="1"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        required />
+                    @if((newEventForm.get('distance')?.touched || newEventForm.get('distance')?.dirty ||
+                    isSubmitted)
+                    && newEventForm.get('distance')?.errors) {
+                    @if(newEventForm.get('distance')?.errors?.['required']) {
+                    <p class="contact-invalid">Distance is necessary</p>
+                    }
+                    @if(newEventForm.get('distance')?.hasError('min') &&
+                    !newEventForm.get('distance')?.errors?.['required']) {
+                    <p class="contact-invalid">Minimiun 1 Km.</p>
+                    }
+                    @if(newEventForm.get('distance')?.hasError('invalidDistance')&&
+                    !newEventForm.get('distance')?.errors?.['required']) {
+                    <p class="contact-invalid">Invalid distance</p>
+                    }
+                    }
                 </div>
                 <div>
-                    <label for="longitude" class="text-white block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Longitude</label>
-                    <input type="number" name="longitude" id="longitude" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required formControlName="longitude">
+                    <label for="latitude"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Latitude</label>
+                    <input type="number" name="latitude" id="latitude"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        required formControlName="latitude">
+                    @if((newEventForm.get('latitude')?.touched || newEventForm.get('latitude')?.dirty ||
+                    isSubmitted)
+                    && newEventForm.get('latitude')?.errors) {
+                    @if(newEventForm.get('latitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Latitude is necessary</p>
+                    }
+                    @if(newEventForm.get('latitude')?.hasError('invalidLatitude')&&
+                    !newEventForm.get('latitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Invalid latitude</p>
+                    }
+                    }
                 </div>
-                
+                <div>
+                    <label for="longitude"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Longitude</label>
+                    <input type="number" name="longitude" id="longitude"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        required formControlName="longitude">
+                    @if((newEventForm.get('longitude')?.touched || newEventForm.get('longitude')?.dirty ||
+                    isSubmitted)
+                    && newEventForm.get('longitude')?.errors) {
+                    @if(newEventForm.get('longitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Latitude is necessary</p>
+                    }
+                    @if(newEventForm.get('longitude')?.hasError('invalidLongitude')&&
+                    !newEventForm.get('longitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Invalid latitude</p>
+                    }
+                    }
+                </div>
+
             </div>
             <div class="modal-btns">
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register new event</button>
-                <button (click)="close()" class=" text-black bg-white bg-white-700 hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-white-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
-    
+                <button type="submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">{{mode
+                    === 'create' ? 'Create Event': 'Modify Event'}}</button>
+                <button (click)="close()"
+                    class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
+
             </div>
         </form>
     </div>
 </div>
+<div class="modal-layer"></div>
 
-  
 
 
 <!-- <div id="modal">
@@ -109,5 +208,4 @@
         </form>
     </div>
     <button (click)="close()">X</button> -->
-<!-- </div> --> 
-
+<!-- </div> -->

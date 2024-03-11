@@ -1,11 +1,14 @@
 #modal {
-    background: #353131;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background: #ffffff;
+    border-radius: 5%;
+    z-index: 100;
+    border: 1px solid rgb(196, 196, 196);
+    padding: 30px 0px 30px 0;
 }
 
 
@@ -19,7 +22,6 @@
         justify-content: center;
 
         h2 {
-            color: #ffffff;
             margin-bottom: 20px;
             font-size: 1rem;
         }
@@ -37,16 +39,17 @@
             background-color: #E9E8F0;
             font-size: 14px;
         }
-        label {
-            color: #ffffff;
-        }
+
+
     }
+
     &-btns {
         display: flex;
         gap: 10px;
     }
 
-    &_btn-create, &_btn-cancel {
+    &_btn-create,
+    &_btn-cancel {
         padding: 14px 24px;
         background-color: #4e535a;
         border: #4e535a;
@@ -60,12 +63,16 @@
         cursor: pointer;
         margin-bottom: 20px;
     }
+
     &_btn-cancel {
         background-color: #ffffff;
         color: #353131;
     }
 
-    &-geo, &-type, &-date, &-btns {
+    &-geo,
+    &-type,
+    &-date,
+    &-btns {
         display: flex;
         justify-content: space-between;
         gap: 10px;
@@ -74,4 +81,24 @@
     &-btns button {
         width: 100%;
     }
+
+    &-layer {
+        z-index: 95;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8)
+    }
+}
+
+label {
+    color: #c5c5c5;
+}
+
+.contact-invalid {
+    color: red;
+    font-size: 12px;
+    position: absolute;
 }

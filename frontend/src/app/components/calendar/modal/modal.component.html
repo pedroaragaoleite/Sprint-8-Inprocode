@@ -1,61 +1,173 @@
 <div class="form" [formGroup]="newCalendarEventForm">
-    <form class="form-flex">
-        <div class="form-header">
-            <h3>{{mode === 'create' ? 'Create Event' : 'Update Event'}}</h3>
-        </div>
-        <div class="form-body">
+    <h3 class="text-gray-700">{{mode === 'create' ? 'Create Event' : 'Modify Event'}}</h3>
+    <form class="mx-auto form-flex">
+        <div class="form-body mb-5">
             <div class="form-date">
                 <div class="form-inputs">
-                    <label for="start">Start at:</label>
-                    <input type="datetime-local" name="start" id="start" formControlName="start">
+                    <label for="start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
+                        at:</label>
+                    <input
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        type="datetime-local" name="start" id="start" formControlName="start">
                 </div>
                 <div class="form-inputs">
-                    <label for="end">End at:</label>
-                    <input type="datetime-local" name="end" id="end" formControlName="end">
+                    <label for="end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
+                        at:</label>
+                    <input
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        type="datetime-local" name="end" id="end" formControlName="end">
                 </div>
             </div>
-            <div class="form-description">
-                <div class="form-inputs">
-                    <label for="title">Name</label>
-                    <input type="text" name="title" id="title" formControlName="title">
-                </div>
-                <div class="form-inputs">
-                    <label for="city">City:</label>
-                    <input type="text" name="city" id="city" formControlName="city">
-                </div>
+
+            <div class="mb-5">
+                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                <input
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    type="text" name="title" id="title" formControlName="title">
+                @if((newCalendarEventForm.get('title')?.touched || newCalendarEventForm.get('title')?.dirty ||
+                isSubmitted)
+                && newCalendarEventForm.get('title')?.errors) {
+                @if(newCalendarEventForm.get('title')?.errors?.['required']) {
+                <p class="contact-invalid">Event name is necessary</p>
+                }
+                @if(newCalendarEventForm.get('title')?.hasError('minlength') &&
+                !newCalendarEventForm.get('title')?.errors?.['required']) {
+                <p class="contact-invalid">Minimiun 3 characters</p>
+                }
+                }
             </div>
+            <div class="mb-5">
+                <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City:</label>
+                <input
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    type="text" name="city" id="city" formControlName="city">
+                @if((newCalendarEventForm.get('city')?.touched || newCalendarEventForm.get('city')?.dirty ||
+                isSubmitted)
+                && newCalendarEventForm.get('city')?.errors) {
+                @if(newCalendarEventForm.get('city')?.errors?.['required']) {
+                <p class="contact-invalid">Place is necessary</p>
+                }
+                @if(newCalendarEventForm.get('city')?.hasError('minlength') &&
+                !newCalendarEventForm.get('city')?.errors?.['required']) {
+                <p class="contact-invalid">Minimiun 3 characters</p>
+                }
+                }
+            </div>
+
 
 
             <div class="form-type">
-                <div class="form-inputs">
-                    <label for="type">Type:</label>
-                    <input type="text" name="type" id="type" formControlName="type">
+                <div class="mb-5">
+                    <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type:</label>
+                    <input
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        type="text" name="type" id="type" formControlName="type">
+                    @if((newCalendarEventForm.get('type')?.touched || newCalendarEventForm.get('type')?.dirty ||
+                    isSubmitted)
+                    && newCalendarEventForm.get('type')?.errors) {
+                    @if(newCalendarEventForm.get('type')?.errors?.['required']) {
+                    <p class="contact-invalid">Type of race is necessary</p>
+                    }
+                    @if(newCalendarEventForm.get('type')?.hasError('minlength') &&
+                    !newCalendarEventForm.get('type')?.errors?.['required']) {
+                    <p class="contact-invalid">Minimiun 3 characters</p>
+                    }
+                    }
                 </div>
-                <div class="form-inputs">
-                    <label for="route_type">Route type:</label>
-                    <input type="text" name="route_type" id="route_type" formControlName="route_type">
+                <div class="mb-5">
+                    <label for="route_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Route
+                        type:</label>
+                    <input
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        type="text" name="route_type" id="route_type" formControlName="route_type">
+                    @if((newCalendarEventForm.get('route_type')?.touched ||
+                    newCalendarEventForm.get('route_type')?.dirty ||
+                    isSubmitted)
+                    && newCalendarEventForm.get('route_type')?.errors) {
+                    @if(newCalendarEventForm.get('route_type')?.errors?.['required']) {
+                    <p class="contact-invalid">Route type is necessary</p>
+                    }
+                    @if(newCalendarEventForm.get('route_type')?.hasError('minlength') &&
+                    !newCalendarEventForm.get('route_type')?.errors?.['required']) {
+                    <p class="contact-invalid">Minimiun 3 characters</p>
+                    }
+                    }
                 </div>
             </div>
 
+
+
             <div class="form-geo">
                 <div class="form-inputs">
-                    <label for="distance">Distance:</label>
-                    <input type="number" name="distance" id="distance" formControlName="distance">
+                    <label for="distance"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Distance:</label>
+                    <input
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        type="number" name="distance" id="distance" formControlName="distance">
+                    @if((newCalendarEventForm.get('distance')?.touched || newCalendarEventForm.get('distance')?.dirty ||
+                    isSubmitted)
+                    && newCalendarEventForm.get('distance')?.errors) {
+                    @if(newCalendarEventForm.get('distance')?.errors?.['required']) {
+                    <p class="contact-invalid">Distance is necessary</p>
+                    }
+                    @if(newCalendarEventForm.get('distance')?.hasError('min') &&
+                    !newCalendarEventForm.get('distance')?.errors?.['required']) {
+                    <p class="contact-invalid">Minimiun 1 Km.</p>
+                    }
+                    @if(newCalendarEventForm.get('distance')?.hasError('invalidDistance')&&
+                    !newCalendarEventForm.get('distance')?.errors?.['required']) {
+                    <p class="contact-invalid">Invalid distance</p>
+                    }
+                    }
                 </div>
                 <div class="form-inputs">
-                    <label for="latitude">Latitude</label>
-                    <input type="number" name="latitude" id="latitude" formControlName="latitude">
+                    <label for="latitude"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Latitude</label>
+                    <input
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        type="number" name="latitude" id="latitude" formControlName="latitude">
+                    @if((newCalendarEventForm.get('latitude')?.touched || newCalendarEventForm.get('latitude')?.dirty ||
+                    isSubmitted)
+                    && newCalendarEventForm.get('latitude')?.errors) {
+                    @if(newCalendarEventForm.get('latitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Latitude is necessary</p>
+                    }
+                    @if(newCalendarEventForm.get('latitude')?.hasError('invalidLatitude')&&
+                    !newCalendarEventForm.get('latitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Invalid latitude</p>
+                    }
+                    }
                 </div>
                 <div class="form-inputs">
-                    <label for="longitude">Longitude</label>
-                    <input type="number" name="longitude" id="longitude" formControlName="longitude">
+                    <label for="longitude"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Longitude</label>
+                    <input
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        type="number" name="longitude" id="longitude" formControlName="longitude">
+                    @if((newCalendarEventForm.get('longitude')?.touched || newCalendarEventForm.get('longitude')?.dirty
+                    ||
+                    isSubmitted)
+                    && newCalendarEventForm.get('longitude')?.errors) {
+                    @if(newCalendarEventForm.get('longitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Latitude is necessary</p>
+                    }
+                    @if(newCalendarEventForm.get('longitude')?.hasError('invalidLongitude')&&
+                    !newCalendarEventForm.get('longitude')?.errors?.['required']) {
+                    <p class="contact-invalid">Invalid latitude</p>
+                    }
+                    }
                 </div>
 
             </div>
         </div>
         <div class="form-btns">
-            <button class="form-btn btn-submit" (click)="onSubmit()">Create event</button>
-            <button class="form-btn btn-cancel" (click)="close()">Cancel</button>
+            <button
+                class="form-btn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                (click)="onSubmit()">{{mode === 'create' ? 'Create Event' :
+                'Modify event'}}</button>
+            <button
+                class="form-btn py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                (click)="close()">Cancel</button>
         </div>
 
     </form>
