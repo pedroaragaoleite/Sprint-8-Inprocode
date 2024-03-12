@@ -92,13 +92,14 @@ export class HomeComponent implements OnInit {
     this.modalMode = 'create';
     this.selectedEvent = null;
     this.showModal = true;
+    window.scrollTo(0, 0);
   }
 
   updateEventModal(event: any): void {
     this.modalMode = 'update';
     this.selectedEvent = event;
     this.showModal = true;
-
+    window.scrollTo(0, 0);
   }
 
   delEvent(event: any): void {

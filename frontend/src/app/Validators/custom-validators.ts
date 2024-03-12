@@ -3,10 +3,10 @@ import { AbstractControl, ValidatorFn } from "@angular/forms";
 export function distanceValidator() {
     return (control: AbstractControl): { [key: string]: any } | null => {
         const numbers = /^(300(\.0{1,3})?|[12]?\d{1,2}(\.\d{1,3})?|[1-9](\.\d{1,3})?)$/
-        console.log((typeof control.value));
+        // console.log((typeof control.value));
 
         const valid = numbers.test(control.value);
-        console.log(valid);
+        // console.log(valid);
 
 
         return valid ? null : { 'invalidDistance': { value: control.value } }

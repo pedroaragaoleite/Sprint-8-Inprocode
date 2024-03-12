@@ -3,19 +3,33 @@
     <form class="mx-auto form-flex">
         <div class="form-body mb-5">
             <div class="form-date">
-                <div class="form-inputs">
+                <div class="mb-5">
                     <label for="start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start
                         at:</label>
                     <input
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                         type="datetime-local" name="start" id="start" formControlName="start">
+                        @if((newCalendarEventForm.get('start')?.touched || newCalendarEventForm.get('start')?.dirty ||
+                        isSubmitted)
+                        && newCalendarEventForm.get('start')?.errors) {
+                        @if(newCalendarEventForm.get('start')?.errors?.['required']) {
+                        <p class="contact-invalid">Start date event is necessary</p>
+                        }
+                    }
                 </div>
-                <div class="form-inputs">
+                <div class="mb-5">
                     <label for="end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End
                         at:</label>
                     <input
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                         type="datetime-local" name="end" id="end" formControlName="end">
+                        @if((newCalendarEventForm.get('end')?.touched || newCalendarEventForm.get('end')?.dirty ||
+                        isSubmitted)
+                        && newCalendarEventForm.get('end')?.errors) {
+                        @if(newCalendarEventForm.get('end')?.errors?.['required']) {
+                        <p class="contact-invalid">End date event is necessary</p>
+                        }
+                    }
                 </div>
             </div>
 
@@ -98,7 +112,7 @@
 
 
             <div class="form-geo">
-                <div class="form-inputs">
+                <div class="mb-5">
                     <label for="distance"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Distance:</label>
                     <input
@@ -120,7 +134,7 @@
                     }
                     }
                 </div>
-                <div class="form-inputs">
+                <div class="mb-5">
                     <label for="latitude"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Latitude</label>
                     <input
