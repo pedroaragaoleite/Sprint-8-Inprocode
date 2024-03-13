@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, ChartConfiguration, ChartType } from 'chart.js/auto';
 import { DatabaseService } from '../../services/database/database.service';
-import { map } from 'rxjs';
 import { EventsData } from '../../interfaces/events-data';
 
 
@@ -16,16 +15,20 @@ import { EventsData } from '../../interfaces/events-data';
 })
 export class ChartComponent implements OnInit {
   eventsResults: EventsData[] = [];
-  labelData: any;
-  realData: any;
-  colorData: any;
+  // labelData: any;
+  // realData: any;
+  // colorData: any;
   kms: any;
   months: any;
+  monthsNames: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  typeRunsData: any;
+  runs: any;
+
 
   public chart!: Chart;
   public kmsChart!: Chart;
 
-  public chartType: ChartType = 'bar';
+  // public chartType: ChartType = 'bar';
 
 
   constructor(private dbService: DatabaseService) {
@@ -38,42 +41,52 @@ export class ChartComponent implements OnInit {
     // this.getKmMonth(this.eventsResults);
   }
 
+  
+  getdata(): void {
+    this.dbService.getEvents()
+      .subscribe((events: EventsData[]) => {
+        this.eventsResults = events;
+        this.getTypeRuns(events);
+        this.getKmMonth(events);
+      })
+
+  }
+
   getMonths(dateString: string): number {
     const date = new Date(dateString);
 
     const month = date.getMonth() + 1;
     // console.log(month);
     return month
-
   }
 
-  getNumberTypeRuns(results: any) {
-    // console.log(results);
-    if (results !== null) {
-      this.realData = this.eventsResults.reduce((acc, value) => {
-
-        if (acc[value.type]) {
-          acc[value.type]++;
-          // console.log(acc[value.type]);
-
-        } else {
-          acc[value.type] = 1;
-          // this.labelData.push(value.route_type)
-        }
-        // console.log(acc);
-
-        return acc;
-      }, {} as { [eventType: string]: number })
-      this.renderChart(this.realData)
+  generateColors(count: number, alpha:number) {
+    const colors = [];
+    for(let i = 0; i < count; i++ ) {
+      const red = (i * 50) % 255;
+      const green = (i * 100) % 255;
+      const blue = (i * 150) % 255;
+      colors.push(`rgb(${red}, ${green}, ${blue}, ${alpha})`);
     }
+    return colors;
+  }
 
+  getTypeRuns(events:any): void {
+    const typeRuns: { [key: string]: number} = {};
+
+    events.forEach((event: any) => {
+      if(!typeRuns[event.type]) {
+        typeRuns[event.type] = 1;
+      }
+      typeRuns[event.type] ++;
+    })
+
+    this.runs = Object.keys(typeRuns);
+    this.typeRunsData = Object.values(typeRuns);
+    this.renderChart();
   }
 
   getKmMonth(events: any): void {
-    console.log(events);
-
-    // const eventsArray = Object.values(events);
-    // console.log(events);
     const distanceMonthly: { [key: string]: number } = {};
 
     events.forEach((event: any) => {
@@ -81,57 +94,49 @@ export class ChartComponent implements OnInit {
       if (!distanceMonthly[month]) {
         distanceMonthly[month] = 0;
       };
-      console.log(distanceMonthly[month]);
-
       distanceMonthly[month] += Number(event.distance);
-
     });
 
-    // console.log(distanceMonthly);
-
-    this.months = Object.keys(distanceMonthly); // Stores months
-    this.kms = Object.values(distanceMonthly); // Stores corresponding distances
+    this.months = Object.keys(distanceMonthly);
+    this.kms = Object.values(distanceMonthly);
     this.renderChartKms();
   }
 
-  renderChartKms() {
-    console.log(this.months);
-    console.log(this.kms);
+ 
 
-    const newChart = new Chart('kmsChart', {
+  renderChartKms() {
+    const color = this.generateColors(this.kms.length, 0.9);
+
+    new Chart('kmsChart', {
       type: 'line',
       data: {
-        labels: this.months,
+        labels: this.monthsNames,
         datasets: [{
           label: "Km's per month",
-          data: this.kms
+          data: this.kms,
+          backgroundColor: color
         }]
       }
     })
   }
 
-  getdata(): void {
-    this.dbService.getEvents()
-      .subscribe((events: EventsData[]) => {
-        this.eventsResults = events;
-        this.getNumberTypeRuns(events);
-        this.getKmMonth(this.eventsResults);
-      })
 
-  }
+  renderChart() {
+    const color = this.generateColors(this.runs.length, 0.9);
+    console.log(this.runs);
+    
 
-  renderChart(realData: any) {
-    const newChart = new Chart('chart', {
+    new Chart('chart', {
       type: 'bar',
       data: {
-        labels: this.labelData,
+        labels: this.runs,
         datasets: [{
           label: 'Number of type of runs in total runs',
-          data: this.realData
+          data: this.typeRunsData,
+          backgroundColor: color
         }]
       }
     })
-
   }
 
 

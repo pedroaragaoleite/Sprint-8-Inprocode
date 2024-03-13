@@ -130,9 +130,6 @@ export class HomeComponent implements OnInit {
       ].join(','))
     ].join('\n');
 
-    console.log(rows);
-
-
     const blob = new Blob([rows], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);

@@ -51,10 +51,10 @@ export class MapViewComponent implements AfterViewInit {
       });
       data.forEach((location: any) => {
 
+        const layersIds = location.category === 'eventCategory1' ? 'category1' : 'category2';
+
         const el = document.createElement('div');
         el.innerHTML = location.name;
-
-
 
         const marker = new mapboxgl.Marker()
           .setLngLat([location.longitude, location.latitude])
@@ -64,6 +64,26 @@ export class MapViewComponent implements AfterViewInit {
           .setText(location.name);
 
         marker.setPopup(popup);
+        // if (!map.getLayer(layersIds)) {
+        //   map.addLayer({
+        //     id: layersIds,
+        //     type: 'symbol', // or 'circle', 'heatmap', etc., depending on your data visualization needs
+        //     source: {
+        //       type: 'geojson',
+        //       data: {
+        //         type: 'FeatureCollection',
+        //         features: [] // Populate with your location data as GeoJSON features
+        //       }
+        //     },
+        //     layout: {
+        //       // Define layout options
+        //     },
+        //     paint: {
+        //       // Define paint options
+        //     }
+        //   });
+        // }
+        
       });
     })
   }

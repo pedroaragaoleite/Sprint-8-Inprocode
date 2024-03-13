@@ -89,12 +89,12 @@
     width: 100%;
     margin: 60px 0 10px 0;
     text-align: center;
-    color: #ffffff;
+    color: #000000;
 }
 
 thead th {
     font-size: 1rem;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px gray;
     padding-bottom: 10px;
 
 }
@@ -112,13 +112,13 @@ tbody td {
 }
 
 .bg-pair {
-    background-color: #353131;
+    background-color: #f0f0f0;
 }
 
 .bg-even {
-    background-color: #4e535a;
+    background-color: #f0f0f0;
     &:hover {
-        background: #0f1011 !important;
+        background: #b4b4b4 !important;
         transition: 1s ease;
     }
 }
@@ -133,7 +133,7 @@ tbody td {
     &-btn {
         
         &_update {
-            background: #d4f806;
+            background: #ffd000;
             border: none;
             padding: 10px;
             cursor: pointer;
