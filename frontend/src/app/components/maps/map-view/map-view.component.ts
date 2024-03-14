@@ -6,6 +6,7 @@ import { Subject, map, switchMap, takeUntil } from 'rxjs';
 import { DatabaseService } from '../../../services/database/database.service';
 import { FeatureCollection, Point } from 'geojson';
 import { Markers } from '../../../interfaces/markers';
+import { Restaurants } from '../../../interfaces/restaurants';
 
 
 
@@ -22,23 +23,25 @@ export class MapViewComponent implements AfterViewInit {
   markers: Markers[] = [];
   map!: mapboxgl.Map;
   markersMap: Markers[] = [];
-  layers: string[] = ['places', 'restaurants'];
+  restaurants: Restaurants[] = [];
+  restaurantsMap: Restaurants[] = [];
+  layers: string[] = ['Historic places', 'restaurants'];
   popup:any = null;
-  restaurantsData = [
-    {
-      name: 'Restaurant 1',
-      latitude: 41.07479 ,
-      longitude: 1.05244,
-      category: 'restaurants'
-    },
-    {
-      name: 'Restaurant 2',
-      latitude: 41.17479 ,
-      longitude: 2.05244,
-      category: 'restaurants'
-    },
-    // Add more restaurants...
-  ];
+  // restaurantsData = [
+  //   {
+  //     name: 'Restaurant 1',
+  //     latitude: 41.07479 ,
+  //     longitude: 1.05244,
+  //     category: 'restaurants'
+  //   },
+  //   {
+  //     name: 'Restaurant 2',
+  //     latitude: 41.17479 ,
+  //     longitude: 2.05244,
+  //     category: 'restaurants'
+  //   },
+  //   // Add more restaurants...
+  // ];
 
   @ViewChild('mapDiv') mapDivElement!: ElementRef
 
@@ -57,6 +60,7 @@ export class MapViewComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap();
     this.showMarkers();
+    this.showRestaurants();
   }
 
   initMap(): void {
@@ -98,10 +102,10 @@ export class MapViewComponent implements AfterViewInit {
         
 
             // console.log(this.markersMap);
-            // console.log(this.restaurantsData);
+            console.log(this.restaurantsMap);
             
             
-            this.addLayerMap(this.map, this.restaurantsData, 'restaurants', 'restaurant');
+            this.addLayerMap(this.map, this.restaurantsMap, 'restaurants', 'restaurant');
             this.addLayerMap(this.map, this.markersMap, 'places', 'historic');
           // this.showMarkers();
          })
@@ -115,7 +119,7 @@ export class MapViewComponent implements AfterViewInit {
 
 
   addLayerMap(map: mapboxgl.Map, data: any[], layerId: string, iconImage: string) {
-// console.log(data);
+console.log(data);
 // data.forEach(item => {
 //   console.log(item);
   
@@ -169,11 +173,25 @@ map.on('mouseleave', layerId, () => {
       source: layerId,
       layout: {
         'icon-image': iconImage, // Use the icon property from each feature
+        'icon-size': 1.5,
         // 'text-field': '{title}', // Optional: Display a title
-        'text-size': 12,
+        'text-size': 14,
       }
     });
   }
+}
+
+showRestaurants() : any {
+  this.placesService.getRestaurants()
+  .subscribe((restaurants: Restaurants[]) => {
+    // console.log(restaurants);
+    
+    this.restaurantsMap = restaurants.map(((restaurant:any) => {
+      return {...restaurant}
+    }))
+    // console.log(this.restaurantsMap);
+    
+  } )
 }
 
   showMarkers():any {   

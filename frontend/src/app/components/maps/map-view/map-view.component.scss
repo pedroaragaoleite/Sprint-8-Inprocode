@@ -9,10 +9,14 @@
 
 .map-layers {
     width: 200px;
+    padding: 10px;
     // height: 150px;
-    background: #ffffff;
+    background: #b8b8b8;
+    // border-radius: 10px;
     z-index: 200;
     position: fixed;
     display: flex;
     flex-direction: column;
+    top: 90px;
+    right: 20px;
 }

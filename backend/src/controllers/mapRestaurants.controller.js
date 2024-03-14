@@ -1,8 +1,10 @@
+
 import { pool } from "../db.js";
 
-export const getMarkers = async (req, res) => {
+
+export const getRestaurants = async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM map_coords');
+        const [rows] = await pool.query('SELECT * FROM restaurants');
         res.json(rows)
     } catch (error) {
         console.error("Failed to get markers:", error)

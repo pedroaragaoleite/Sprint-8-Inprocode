@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Markers } from '../../interfaces/markers';
+import { Restaurants } from '../../interfaces/restaurants';
 
 
 @Injectable({
@@ -11,6 +12,7 @@ import { Markers } from '../../interfaces/markers';
 export class PlacesService {
   private apiUrl = 'http://localhost:3000/api/data';
   private apiSql = 'http://localhost:3000/api/map_coords';
+  private apiRest = 'http://localhost:3000/api/restaurants';
 
   getConfig(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}`);
@@ -45,6 +47,10 @@ export class PlacesService {
   getMarkers(): Observable<Markers[]>{
    
     return this.http.get<Markers[]>(`${this.apiSql}`);
+  }
+  getRestaurants(): Observable<Restaurants[]>{
+   
+    return this.http.get<Restaurants[]>(`${this.apiRest}`);
   }
 
   // getAllLocations(): Observable<any> {
