@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import runningEventsRoutes from './routes/runningEvents.routes.js';
+import mapHistoricPoints from './routes/map.routes.js';
 import { MAPAPI } from './config.js';
 
 
@@ -22,6 +23,7 @@ app.get('/api/data', (req, res) => {
 
 // app.use(runningEventsRoutes);
 app.use('/api', runningEventsRoutes);
+app.use('/api', mapHistoricPoints);
 
 app.use((req, res, next) => {
     res.status(404).json({

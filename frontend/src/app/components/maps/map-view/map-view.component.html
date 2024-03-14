@@ -1,4 +1,11 @@
+<!-- <div *ngFor="let layer of ['events', 'restaurants', 'landmarks']; let i = index">
+    <input type="checkbox" [id]="layer" [checked]="true" (change)="toggleLayerVisibility(layer, $event)">
+    <label [for]="layer">{{layer}}</label>
+  </div> -->
+
+  @for( layer of markersMap; track $index) {
+    <input type="checkbox" [id]="layer" [checked]="true" (change)="toggleLayerVisibility(layer, $event)">
+    <label [for]="layer">{{layer}}</label>
+  }
 <div #mapDiv class="map-container">  
 </div>
-<label><input type="checkbox" id="toggleCategory1"> Event Category 1</label>
-<label><input type="checkbox" id="toggleCategory2"> Event Category 2</label>
