@@ -20,42 +20,19 @@ import { Restaurants } from '../../../interfaces/restaurants';
   styleUrl: './map-view.component.scss'
 })
 export class MapViewComponent implements AfterViewInit {
-  markers: Markers[] = [];
+  
   map!: mapboxgl.Map;
-  markersMap: Markers[] = [];
-  restaurants: Restaurants[] = [];
+  markersMap: Markers[] = [];  
   restaurantsMap: Restaurants[] = [];
   layers: string[] = ['Historic places', 'restaurants'];
   popup:any = null;
-  // restaurantsData = [
-  //   {
-  //     name: 'Restaurant 1',
-  //     latitude: 41.07479 ,
-  //     longitude: 1.05244,
-  //     category: 'restaurants'
-  //   },
-  //   {
-  //     name: 'Restaurant 2',
-  //     latitude: 41.17479 ,
-  //     longitude: 2.05244,
-  //     category: 'restaurants'
-  //   },
-  //   // Add more restaurants...
-  // ];
 
   @ViewChild('mapDiv') mapDivElement!: ElementRef
 
   private destroy$ = new Subject<void>();
 
 
-  constructor(private placesService: PlacesService, private dbService: DatabaseService) {
-    // console.log(this.placesService.userLocation);
-    // this.getAllLocations(); 
-  }
-
-  // mapToken = this.placesService.getConfig();
-
-
+  constructor(private placesService: PlacesService, private dbService: DatabaseService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -79,11 +56,7 @@ export class MapViewComponent implements AfterViewInit {
       });
 
 
-      data.forEach((location: any) => {
-        
-
-       
-
+      data.forEach((location: any) => {     
         const el = document.createElement('div');
         el.innerHTML = location.name;
 
@@ -93,53 +66,32 @@ export class MapViewComponent implements AfterViewInit {
 
         const popup = new mapboxgl.Popup({ offset: 25 })
           .setText(location.name);
-
-        marker.setPopup(popup);
-        
-        
+        marker.setPopup(popup);       
       });
-      this.map.on('load', () => {
-        
 
-            // console.log(this.markersMap);
-            console.log(this.restaurantsMap);
-            
-            
+      this.map.on('load', () => {       
+            console.log(this.restaurantsMap);          
             this.addLayerMap(this.map, this.restaurantsMap, 'restaurants', 'restaurant');
-            this.addLayerMap(this.map, this.markersMap, 'places', 'historic');
-          // this.showMarkers();
-         })
-         
-      
-      
-    })  
-    
+            this.addLayerMap(this.map, this.markersMap, 'Historic places', 'historic');
+         })         
+    })      
   }
-
-
-
   addLayerMap(map: mapboxgl.Map, data: any[], layerId: string, iconImage: string) {
-console.log(data);
-// data.forEach(item => {
-//   console.log(item);
-  
-// })
+    map.on('mouseenter', layerId, (e:any) => {
+      // Create and show the popup the same way as in the click event
+      const feature = e.features[0];
+      this.popup = new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(`<h3>${feature.properties.title}</h3>`)
+        .addTo(map);
+    });
 
-map.on('mouseenter', layerId, (e:any) => {
-  // Create and show the popup the same way as in the click event
-  const feature = e.features[0];
-  this.popup = new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(`<h3>${feature.properties.title}</h3>`)
-    .addTo(map);
-});
-
-map.on('mouseleave', layerId, () => {
-  if (this.popup) {
-    this.popup.remove(); // Remove the popup when the mouse leaves the feature
-    this.popup = null; // Reset the popup variable
-  }
-});
+    map.on('mouseleave', layerId, () => {
+      if (this.popup) {
+        this.popup.remove(); // Remove the popup when the mouse leaves the feature
+        this.popup = null; // Reset the popup variable
+      }
+    });
     
     const geoJson: GeoJSON.FeatureCollection<GeoJSON.Point> = {
       type: 'FeatureCollection',
@@ -152,7 +104,7 @@ map.on('mouseleave', layerId, () => {
           coordinates: [item.longitude, item.latitude]
         }
       }))
-  }
+    }
   // Add the GeoJSON source to the map
   if (!map.getSource(layerId)) {
     map.addSource(layerId, {
@@ -183,46 +135,19 @@ map.on('mouseleave', layerId, () => {
 
 showRestaurants() : any {
   this.placesService.getRestaurants()
-  .subscribe((restaurants: Restaurants[]) => {
-    // console.log(restaurants);
-    
+  .subscribe((restaurants: Restaurants[]) => {    
     this.restaurantsMap = restaurants.map(((restaurant:any) => {
       return {...restaurant}
-    }))
-    // console.log(this.restaurantsMap);
-    
+    }))    
   } )
 }
 
   showMarkers():any {   
     this.placesService.getMarkers()
     .subscribe((markers: Markers[]) => {
-      // console.log(markers);
-      this.markersMap = markers.map((marker:any) => {
-        // console.log(marker);
-        
+      this.markersMap = markers.map((marker:any) => {        
         return {...marker}
       }) 
-
-      // console.log(this.markersMap);
-      
-      // markers.forEach((marker:any) => {
-        // console.log((marker));
-        // this.markersMap.push(marker);
-        // const name = document.createElement('div');
-        // name.classList.add('historicPlaces');
-        // name.innerHTML = marker.name;
-
-        // const markerMap = new mapboxgl.Marker({
-        //   color: "#671cde"
-        // })
-        //   .setLngLat([marker.longitude, marker.latitude])
-        //   .addTo(this.map);
-        //   const popup = new mapboxgl.Popup({ offset: 25 })
-        //   .setText(marker.name);     
-        //   markerMap.setPopup(popup);
-
-      // })
     })
   }
 
