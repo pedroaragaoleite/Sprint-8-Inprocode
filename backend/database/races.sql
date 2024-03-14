@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-03-2024 a las 20:56:41
+-- Tiempo de generación: 14-03-2024 a las 21:25:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -105,6 +105,31 @@ CREATE TABLE `running_events` (
 --
 
 INSERT INTO `running_events` (`id`, `event_date`, `name`, `city`, `type`, `route_type`, `distance`, `latitude`, `longitude`, `start`, `end`) VALUES
+(1, '2024-01-15', 'Madrid Marathon', 'Madrid', 'Marathon', 'City', 42.20, 40.4165, -3.7026, '2024-01-15 09:00:00', '2024-01-15 10:00:00'),
+(2, '2024-02-10', 'Barcelona Half Marathon', 'Barcelona', 'Half Marathon', 'City', 21.10, 41.3851, 2.1734, '2024-02-10 09:00:00', '2024-02-10 10:00:00'),
+(3, '2024-03-20', 'Valencia 10K', 'Valencia', '10K', 'Beach', 10.00, 39.4699, -0.3763, '2024-03-20 09:00:00', '2024-03-20 10:00:00'),
+(4, '2024-04-05', 'Seville City Run', 'Seville', '5K', 'City', 5.00, 37.3891, -5.9845, '2024-04-05 09:00:00', '2024-04-05 10:00:00'),
+(5, '2024-05-25', 'Malaga Beach Marathon', 'Malaga', 'Marathon', 'Beach', 42.20, 36.7213, -4.4217, '2024-05-25 09:00:00', '2024-05-25 10:00:00'),
+(6, '2024-06-15', 'Bilbao Night Half Marathon', 'Bilbao', 'Half Marathon', 'City', 21.10, 43.2630, -2.9350, '2024-06-15 09:00:00', '2024-06-15 10:00:00'),
+(7, '2024-07-08', 'Granada Historic 10K', 'Granada', '10K', 'Historic', 10.00, 37.1773, -3.5986, '2024-07-08 09:00:00', '2024-07-08 10:00:00'),
+(8, '2024-08-22', 'Alicante Sunset Run', 'Alicante', '5K', 'Beach', 5.00, 38.3452, -0.4810, '2024-08-22 09:00:00', '2024-08-22 10:00:00'),
+(9, '2024-09-09', 'Zaragoza River Marathon', 'Zaragoza', 'Marathon', 'River', 42.20, 41.6488, -0.8891, '2024-09-09 09:00:00', '2024-09-09 10:00:00'),
+(10, '2024-10-14', 'Gijon Autumn 10K', 'Gijon', '10K', 'Park', 10.00, 43.5411, -5.6645, '2024-10-14 09:00:00', '2024-10-14 10:00:00'),
+(11, '2024-11-03', 'Tarragona Coastal Run', 'Tarragona', 'Half Marathon', 'Coast', 21.10, 41.1189, 1.2445, '2024-11-03 09:00:00', '2024-11-03 10:00:00'),
+(12, '2024-12-05', 'Cordoba Bridge Marathon', 'Cordoba', 'Marathon', 'Historic', 42.20, 37.8882, -4.7794, '2024-12-05 09:00:00', '2024-12-05 10:00:00'),
+(13, '2024-02-25', 'Lleida Trail Run', 'Lleida', 'Trail', 'Mountain', 15.00, 41.6176, 0.6200, '2024-02-25 09:00:00', '2024-02-25 10:00:00'),
+(14, '2024-03-18', 'Salamanca Historical Marathon', 'Salamanca', 'Marathon', 'Historic', 42.20, 40.9618, -5.6668, '2024-03-18 09:00:00', '2024-03-18 10:00:00'),
+(15, '2024-04-10', 'Pamplona City Run', 'Pamplona', '5K', 'City', 5.00, 42.8185, -1.6443, '2024-04-10 09:00:00', '2024-04-10 10:00:00'),
+(16, '2024-05-05', 'Oviedo Green Marathon', 'Oviedo', 'Marathon', 'Park', 42.20, 43.3614, -5.8494, '2024-05-05 09:00:00', '2024-05-05 10:00:00'),
+(17, '2024-06-30', 'Santander Bay 10K', 'Santander', '10K', 'Bay', 10.00, 43.4623, -3.8099, '2024-06-30 09:00:00', '2024-06-30 10:00:00'),
+(18, '2024-07-20', 'Vigo Seaside Half Marathon', 'Vigo', 'Half Marathon', 'Seaside', 21.10, 42.2406, -8.7207, '2024-07-20 09:00:00', '2024-07-20 10:00:00'),
+(19, '2024-08-16', 'Murcia Summer 5K', 'Murcia', '5K', 'City', 5.00, 37.9922, -1.1307, '2024-08-16 09:00:00', '2024-08-16 10:00:00'),
+(20, '2024-09-22', 'Huesca Mountain Marathon', 'Huesca', 'Marathon', 'Mountain', 42.20, 42.1361, -0.4089, '2024-09-22 09:00:00', '2024-09-22 10:00:00'),
+(21, '2024-10-29', 'Logroño Vineyard Run', 'Logroño', 'Half Marathon', 'Vineyard', 21.10, 42.4627, -2.4445, '2024-10-29 09:00:00', '2024-10-29 10:00:00'),
+(22, '2024-11-19', 'Badajoz Border Run', 'Badajoz', '10K', 'River', 10.00, 38.8794, -6.9703, '2024-11-19 09:00:00', '2024-11-19 10:00:00'),
+(23, '2024-12-12', 'Santa Cruz de Tenerife Island Marathon', 'Santa Cruz de Tenerife', 'Marathon', 'Island', 42.20, 28.4636, -16.2518, '2024-12-12 09:00:00', '2024-12-12 10:00:00'),
+(24, '2024-07-04', 'Almeria Desert Run', 'Almeria', 'Trail', 'Desert', 20.00, 36.8340, -2.4637, '2024-07-04 09:00:00', '2024-07-04 10:00:00'),
+(25, '2024-08-03', 'Toledo Medieval Marathon', 'Toledo', 'Marathon', 'Historic', 42.20, 39.8628, -4.0273, '2024-08-03 09:00:00', '2024-08-03 10:00:00'),
 (102, '2024-01-05', 'New Year Resolution Run', 'Barcelona', '5K', 'Urban', 5.00, 41.3851, 2.1734, '2024-01-05 09:00:00', '2024-01-05 10:00:00'),
 (103, '2024-01-12', 'Winter Wonderland Half', 'Andorra', 'Half Marathon', 'Snow', 21.10, 42.5063, 1.5218, '2024-01-12 08:00:00', '2024-01-12 11:00:00'),
 (104, '2024-01-19', 'Urban Trail Series', 'Madrid', '10K', 'City', 10.00, 40.4168, -3.7038, '2024-01-19 07:00:00', '2024-01-19 08:30:00'),
@@ -160,7 +185,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT de la tabla `running_events`
 --
 ALTER TABLE `running_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

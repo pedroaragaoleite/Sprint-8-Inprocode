@@ -152,19 +152,12 @@ showRestaurants() : any {
   }
 
   toggleLayerVisibility(layerId: string, event: any): void {
-    const isChecked = event.target.checked;
-    console.log(isChecked);
-    
-    const visibility = isChecked ? 'visible' : 'none';
-    console.log(visibility);
-    
-    console.log(this.map.getLayer(layerId));
-    
+    const isChecked = event.target.checked;    
+    const visibility = isChecked ? 'visible' : 'none';    
     if (this.map.getLayer(layerId)) { // Check if the layer exists
       this.map.setLayoutProperty(layerId, 'visibility', visibility);
     }
   }
-
 }
 
 
