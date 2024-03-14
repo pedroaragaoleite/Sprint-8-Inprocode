@@ -1,4 +1,6 @@
 export interface Markers {
-    name: string
+    name: string,
+    latitude: number,
+    longitude: number
 }
 

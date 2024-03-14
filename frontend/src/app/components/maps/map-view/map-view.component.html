@@ -3,9 +3,14 @@
     <label [for]="layer">{{layer}}</label>
   </div> -->
 
-  @for( layer of markersMap; track $index) {
-    <input type="checkbox" [id]="layer" [checked]="true" (change)="toggleLayerVisibility(layer, $event)">
+  <div class="map-layers">
+  @for( layer of layers; track $index) {
+    <div>
+        <input type="checkbox" [id]="layer" [checked]="true" (change)="toggleLayerVisibility(layer, $event)">
     <label [for]="layer">{{layer}}</label>
+    </div>
+    
   }
+</div>
 <div #mapDiv class="map-container">  
 </div>
