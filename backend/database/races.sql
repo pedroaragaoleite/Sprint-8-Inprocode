@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-03-2024 a las 16:58:36
+-- Tiempo de generación: 14-03-2024 a las 20:56:41
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -30,25 +30,55 @@ SET time_zone = "+00:00";
 CREATE TABLE `map_coords` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `longitude` decimal(11,8) NOT NULL,
-  `latitude` decimal(10,8) NOT NULL
+  `latitude` decimal(10,8) NOT NULL,
+  `longitude` decimal(11,8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `map_coords`
 --
 
-INSERT INTO `map_coords` (`id`, `name`, `longitude`, `latitude`) VALUES
-(36, 'The Alhambra', -3.58814100, 37.17607800),
-(37, 'The Great Mosque of Córdoba', -4.77938300, 37.87908300),
-(38, 'Park Güell', 2.15272400, 41.41449500),
-(39, 'Sagrada Família', 2.17435600, 41.40362900),
-(40, 'Toledo Old City', -4.02263700, 39.86283800),
-(41, 'The Giralda', -5.99250000, 37.38611100),
-(42, 'Alcázar of Segovia', -4.12399600, 40.94807100),
-(43, 'Royal Palace of Madrid', -3.71431200, 40.41795300),
-(44, 'Plaza Mayor, Salamanca', -5.66353900, 40.96077300),
-(45, 'El Escorial', -4.12374900, 40.58903000);
+INSERT INTO `map_coords` (`id`, `name`, `latitude`, `longitude`) VALUES
+(36, 'The Alhambra', 37.17607800, -3.58814100),
+(37, 'The Great Mosque of Córdoba', 37.87908300, -4.77938300),
+(38, 'Park Güell', 41.41449500, 2.15272400),
+(39, 'Sagrada Família', 41.40362900, 2.17435600),
+(40, 'Toledo Old City', 39.86283800, -4.02263700),
+(41, 'The Giralda', 37.38611100, -5.99250000),
+(42, 'Alcázar of Segovia', 40.94807100, -4.12399600),
+(43, 'Royal Palace of Madrid', 40.41795300, -3.71431200),
+(44, 'Plaza Mayor, Salamanca', 40.96077300, -5.66353900),
+(45, 'El Escorial', 40.58903000, -4.12374900);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `restaurants`
+--
+
+CREATE TABLE `restaurants` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `latitude` decimal(10,6) NOT NULL,
+  `longitude` decimal(10,6) NOT NULL,
+  `type_food` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `restaurants`
+--
+
+INSERT INTO `restaurants` (`id`, `name`, `latitude`, `longitude`, `type_food`) VALUES
+(1, 'Verde Vivo', 40.416775, -3.703790, 'Healthy'),
+(2, 'Olas de Avena', 41.385064, 2.173404, 'Healthy'),
+(3, 'Eco Bocado', 39.469907, -0.376288, 'Healthy'),
+(4, 'Raíces y Hojas', 37.388630, -5.982330, 'Healthy'),
+(5, 'Sabor Sano', 36.721261, -4.421266, 'Healthy'),
+(6, 'Alma Zen', 43.362344, -8.411540, 'Healthy'),
+(7, 'Verdor Vital', 28.123546, -15.436257, 'Healthy'),
+(8, 'Fresco Fénix', 39.862832, -4.027323, 'Healthy'),
+(9, 'Huerta y Corazón', 41.648823, -0.889085, 'Healthy'),
+(10, 'Pureza Pura', 38.345996, -0.490686, 'Healthy');
 
 -- --------------------------------------------------------
 
@@ -94,6 +124,14 @@ INSERT INTO `running_events` (`id`, `event_date`, `name`, `city`, `type`, `route
 -- Indices de la tabla `map_coords`
 --
 ALTER TABLE `map_coords`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `longitude` (`longitude`),
+  ADD KEY `longitude_2` (`longitude`);
+
+--
+-- Indices de la tabla `restaurants`
+--
+ALTER TABLE `restaurants`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -111,6 +149,12 @@ ALTER TABLE `running_events`
 --
 ALTER TABLE `map_coords`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT de la tabla `restaurants`
+--
+ALTER TABLE `restaurants`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `running_events`
