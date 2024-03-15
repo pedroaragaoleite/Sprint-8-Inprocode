@@ -72,19 +72,23 @@ export class HomeComponent implements OnInit {
   }
 
   getAllEvents(): void {
+
     this.databaseService.getEvents()
-      .subscribe((events: EventsData[]) => {
+      .subscribe({
+        next: (events: EventsData[]) => {
+          this.eventsResults = events.map((event: any) => {
+            const formattedDate = this.changeDate(new Date(event.start));
+            return { ...event, event_date: formattedDate };
+          });
+        },
+        error: (error) => {
+          console.error("Error fetching events data: ", error);
 
-        this.eventsResults = events.map((event: any) => {
-          
-          
-          const formattedDate = this.changeDate(new Date(event.start));
-          // console.log(event);
+        },
+        complete: () => {
+          console.log("Events data fetched");
 
-          return { ...event, event_date: formattedDate };
-        });
-        // console.log(this.eventsResults);
-
+        }
       })
   }
 

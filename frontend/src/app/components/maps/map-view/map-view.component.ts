@@ -20,12 +20,12 @@ import { Restaurants } from '../../../interfaces/restaurants';
   styleUrl: './map-view.component.scss'
 })
 export class MapViewComponent implements AfterViewInit {
-  
+
   map!: mapboxgl.Map;
-  markersMap: Markers[] = [];  
+  markersMap: Markers[] = [];
   restaurantsMap: Restaurants[] = [];
   layers: string[] = ['Historic places', 'restaurants'];
-  popup:any = null;
+  popup: any = null;
 
   @ViewChild('mapDiv') mapDivElement!: ElementRef
 
@@ -56,7 +56,7 @@ export class MapViewComponent implements AfterViewInit {
       });
 
 
-      data.forEach((location: any) => {     
+      data.forEach((location: any) => {
         const el = document.createElement('div');
         el.innerHTML = location.name;
 
@@ -66,18 +66,17 @@ export class MapViewComponent implements AfterViewInit {
 
         const popup = new mapboxgl.Popup({ offset: 25 })
           .setText(location.name);
-        marker.setPopup(popup);       
+        marker.setPopup(popup);
       });
 
-      this.map.on('load', () => {       
-            console.log(this.restaurantsMap);          
-            this.addLayerMap(this.map, this.restaurantsMap, 'restaurants', 'restaurant');
-            this.addLayerMap(this.map, this.markersMap, 'Historic places', 'historic');
-         })         
-    })      
+      this.map.on('load', () => {
+        this.addLayerMap(this.map, this.restaurantsMap, 'restaurants', 'restaurant');
+        this.addLayerMap(this.map, this.markersMap, 'Historic places', 'historic');
+      })
+    })
   }
   addLayerMap(map: mapboxgl.Map, data: any[], layerId: string, iconImage: string) {
-    map.on('mouseenter', layerId, (e:any) => {
+    map.on('mouseenter', layerId, (e: any) => {
       // Create and show the popup the same way as in the click event
       const feature = e.features[0];
       this.popup = new mapboxgl.Popup()
@@ -92,68 +91,89 @@ export class MapViewComponent implements AfterViewInit {
         this.popup = null; // Reset the popup variable
       }
     });
-    
+
     const geoJson: GeoJSON.FeatureCollection<GeoJSON.Point> = {
       type: 'FeatureCollection',
       features: data.map(item => ({
-        
+
         type: 'Feature',
-        properties: { title: item.name,  icon: iconImage },
+        properties: { title: item.name, icon: iconImage },
         geometry: {
           type: 'Point',
           coordinates: [item.longitude, item.latitude]
         }
       }))
     }
-  // Add the GeoJSON source to the map
-  if (!map.getSource(layerId)) {
-    map.addSource(layerId, {
-      type: 'geojson',
-      data: geoJson
-    });
-  } else {
-    // Update source data if it already exists
-    const source = map.getSource(layerId) as mapboxgl.GeoJSONSource;
-    source.setData(geoJson);
+    // Add the GeoJSON source to the map
+    if (!map.getSource(layerId)) {
+      map.addSource(layerId, {
+        type: 'geojson',
+        data: geoJson
+      });
+    } else {
+      // Update source data if it already exists
+      const source = map.getSource(layerId) as mapboxgl.GeoJSONSource;
+      source.setData(geoJson);
+    }
+
+    // Add a layer for the markers if it doesn't already exist
+    if (!map.getLayer(layerId)) {
+      map.addLayer({
+        id: layerId,
+        type: 'symbol',
+        source: layerId,
+        layout: {
+          'icon-image': iconImage, // Use the icon property from each feature
+          'icon-size': 1.5,
+          // 'text-field': '{title}', // Optional: Display a title
+          'text-size': 14,
+        }
+      });
+    }
   }
 
-  // Add a layer for the markers if it doesn't already exist
-  if (!map.getLayer(layerId)) {
-    map.addLayer({
-      id: layerId,
-      type: 'symbol',
-      source: layerId,
-      layout: {
-        'icon-image': iconImage, // Use the icon property from each feature
-        'icon-size': 1.5,
-        // 'text-field': '{title}', // Optional: Display a title
-        'text-size': 14,
-      }
-    });
+  showRestaurants(): any {
+    this.placesService.getRestaurants()
+      .subscribe({
+        next: (restaurants: Restaurants[]) => {
+          this.restaurantsMap = restaurants.map((restaurant: any) => ({ ...restaurant }));
+        },
+        error: (error) => {
+          console.log("Error fetching data: ", error);
+        },
+        complete: () => {
+          console.log("Fetching data completed");
+        }
+      })
   }
-}
 
-showRestaurants() : any {
-  this.placesService.getRestaurants()
-  .subscribe((restaurants: Restaurants[]) => {    
-    this.restaurantsMap = restaurants.map(((restaurant:any) => {
-      return {...restaurant}
-    }))    
-  } )
-}
-
-  showMarkers():any {   
+  showMarkers(): any {
     this.placesService.getMarkers()
-    .subscribe((markers: Markers[]) => {
-      this.markersMap = markers.map((marker:any) => {        
-        return {...marker}
-      }) 
-    })
+      .subscribe({
+        next: (markers: Markers[]) => {
+          this.markersMap = markers.map((marker: any) => ({ ...marker }))
+        },
+        error: (error) => {
+          console.log("Error fetching data: ", error);
+
+        },
+        complete: () => {
+          console.log("Fetching data completed");
+
+        }
+      })
   }
+
+
+  //     (markers: Markers[]) => {
+  //     
+  //     }) 
+  //   })
+  // }
 
   toggleLayerVisibility(layerId: string, event: any): void {
-    const isChecked = event.target.checked;    
-    const visibility = isChecked ? 'visible' : 'none';    
+    const isChecked = event.target.checked;
+    const visibility = isChecked ? 'visible' : 'none';
     if (this.map.getLayer(layerId)) { // Check if the layer exists
       this.map.setLayoutProperty(layerId, 'visibility', visibility);
     }
